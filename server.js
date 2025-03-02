@@ -10,6 +10,8 @@ import swaggerUI from "swagger-ui-express";
 import cors from "cors";
 import session from 'express-session';
 import passport from 'passport';
+import gptRoutes from "./routes/gptRoute.js"; 
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -41,6 +43,7 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 //app.use("/storage", fileRoute);
 app.use("/users", usersRoute);
+app.use("/gpt", gptRoutes); // Add the GPT routes
 //app.use("/storage", express.static("storage"));
 app.use(express.static("front"));
 const options = {
