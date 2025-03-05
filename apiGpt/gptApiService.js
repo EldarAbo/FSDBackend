@@ -17,7 +17,7 @@ export async function processPdfWithGpt(pdfPath) {
     await runPythonScript('api_test.py');
     
     // Read the result from the response.json file
-    const resultPath = path.join(__dirname, 'apiGpt', 'response.json');
+    const resultPath = path.join(__dirname, 'response.json');
     const resultData = await fs.readFile(resultPath, 'utf8');
     
     return JSON.parse(resultData);
@@ -38,7 +38,7 @@ export async function processTextWithGpt() {
     await runPythonScript('api_test_no_files.py');
     
     // Read the result from the response.json file
-    const resultPath = path.join(__dirname, 'apiGpt', 'response.json');
+    const resultPath = path.join(__dirname, 'response.json');
     const resultData = await fs.readFile(resultPath, 'utf8');
     
     return JSON.parse(resultData);
@@ -56,9 +56,9 @@ export async function generateHtmlExam() {
   try {
     // Run the Python script to generate HTML from JSON
     await runPythonScript('generate_html_from_json.py');
-    
+
     // Return the path to the HTML file
-    return path.join(__dirname, 'apiGpt', 'exam.html');
+    return path.join(__dirname, 'exam1.html');
   } catch (error) {
     console.error('Error generating HTML exam:', error);
     throw error;

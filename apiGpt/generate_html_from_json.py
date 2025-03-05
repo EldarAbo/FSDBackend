@@ -1,4 +1,4 @@
-import json
+import json,os
 
 # Your JSON data
 data = {
@@ -240,14 +240,18 @@ def generate_html(data):
     
     return html_content
 
-with open("response.json", "r", encoding="utf-8") as json_file:
+script_dir = os.path.dirname(os.path.abspath(__file__))
+json_path = os.path.join(script_dir, 'response.json')
+
+with open(json_path, "r", encoding="utf-8") as json_file:
     data = json.load(json_file)
 
 # Generate the HTML
 html_output = generate_html(data)
 
+json_path_html = os.path.join(script_dir, 'exam1.html')
 # Save the output to a file
-with open('exam.html', 'w', encoding='utf-8') as f:
+with open(json_path_html, 'w', encoding='utf-8') as f:
     f.write(html_output)
 
 #TODO: add files from folder

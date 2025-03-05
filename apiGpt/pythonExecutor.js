@@ -15,7 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export function runPythonScript(scriptName, args = []) {
   return new Promise((resolve, reject) => {
     // Build the full path to the script
-    const scriptPath = path.join(__dirname, 'apiGpt', scriptName);
+    const scriptPath = path.join(__dirname, scriptName);
     
     // Build the command with arguments
     const argString = args.join(' ');

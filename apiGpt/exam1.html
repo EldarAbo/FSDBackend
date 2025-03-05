@@ -1,0 +1,192 @@
+
+    <!DOCTYPE html>
+    <html lang="he">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>מבחן</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                direction: rtl;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                color: #333;
+            }
+            h1, h2 {
+                text-align: center;
+                color: #2c3e50;
+            }
+            .container {
+                width: 80%;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .question {
+                margin-bottom: 20px;
+                padding: 10px;
+                background-color: #ecf0f1;
+                border-radius: 5px;
+            }
+            .question p {
+                font-size: 18px;
+                margin: 5px 0;
+            }
+            .options {
+                margin-left: 20px;
+                font-size: 16px;
+            }
+            .options p {
+                margin-bottom: 5px;
+            }
+            .answer {
+                font-weight: bold;
+                color: #27ae60;
+                display: none;
+            }
+            .open-question {
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            .open-question p {
+                font-size: 18px;
+            }
+            .answer-text {
+                font-size: 16px;
+                color: #34495e;
+                margin-top: 10px;
+                display: none;
+            }
+            .show-answer-btn {
+                margin-top: 10px;
+                padding: 5px 10px;
+                background-color: #2980b9;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .show-answer-btn:hover {
+                background-color: #3498db;
+            }
+        </style>
+        <script>
+            function toggleAnswer(id) {
+                var answer = document.getElementById(id);
+                if (answer.style.display === "none") {
+                    answer.style.display = "block";
+                } else {
+                    answer.style.display = "none";
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>מבחן</h1>
+
+        <h2>שאלות רב-ברירה</h2>
+    
+        <div class="question">
+            <p>מהו תפקיד אלגוריתם ה-SVM?</p>
+            <div class="options">
+        <p>א. בניית עץ החלטה המבוסס על מרחקים</p><p>ב. יצירת הפרדה לינארית אופטימלית בין קבוצות</p><p>ג. שיפור ביצועים של אוגר לינארי</p><p>ד. כל התשובות נכונות</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer0')">הצג תשובה</button>
+            <p id="answer0" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <div class="question">
+            <p>מהם וקטורים תמיכה (Support Vectors) באלגוריתם SVM?</p>
+            <div class="options">
+        <p>א. נקודות מידע המסייעות בבניית עץ החלטה</p><p>ב. נקודות מידע הממקסמות את המרחק בין הגבולות המחלקים</p><p>ג. נקודות מידע שהוחל עליהן פילטרינג</p><p>ד. נקודות מידע שאינן משפיעות על הפתרון הסופי</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer1')">הצג תשובה</button>
+            <p id="answer1" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <div class="question">
+            <p>מהו היתרון של אלגוריתם ה-SVM לעומת פרספטרון?</p>
+            <div class="options">
+        <p>א. SVM תמיד מוצא פתרון</p><p>ב. SVM עוסק במידע לא מסוייע בלבד</p><p>ג. SVM ממקסם את המרווח בין הקבוצות</p><p>ד. פרספטרון מתמודד עם מידע לינארי בלבד</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer2')">הצג תשובה</button>
+            <p id="answer2" class="answer">תשובה נכונה: ג</p>
+        </div>
+        
+        <div class="question">
+            <p>איזו אופציה נכונה לגבי הביאס (b) באלגוריתם SVM?</p>
+            <div class="options">
+        <p>א. b נשמר תמיד כקבוע שהוא 0</p><p>ב. b מחושב לחיזוק ההפרדה בין הקבוצות</p><p>ג. b מבוסס אך ורק על וקטור השגיאה</p><p>ד. אין צורך ב-b באלגוריתם SVM</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer3')">הצג תשובה</button>
+            <p id="answer3" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <div class="question">
+            <p>מה מציין משתנה ה-alpha באלגוריתם SVM?</p>
+            <div class="options">
+        <p>א. משתנה מספרי לקביעת מספר האיטרציות</p><p>ב. משתנה הקובע את ההשפעה של כל נקודת נתון על ההחלטה</p><p>ג. משתנה לקביעת ספציפיות הנתונים</p><p>ד. משתנה המייצג את עוצמת הלמידה</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer4')">הצג תשובה</button>
+            <p id="answer4" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <div class="question">
+            <p>כיצד מחשבים את הווקטור החדש (w) במקרה של פונקציונל מרובה משתנים?</p>
+            <div class="options">
+        <p>א. חישוב על בסיס כלל הממוצע</p><p>ב. הכפלת המקדמים החדשים בוקטורים הישנים</p><p>ג. סכום הוקטורים הישנים</p><p>ד. חישוב דיפרנציאלי על הוקטורים</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer5')">הצג תשובה</button>
+            <p id="answer5" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <div class="question">
+            <p>מהם הנתונים הבסיסיים הדרושים להפעלת אלגוריתם SVM?</p>
+            <div class="options">
+        <p>א. נדבכי עצים וענפי דפדוף</p><p>ב. מדדים ומודעות מידע</p><p>ג. קבוצת אימון הכוללת ערכים ותוויות תקינות</p><p>ד. כל התשובות נכונות</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer6')">הצג תשובה</button>
+            <p id="answer6" class="answer">תשובה נכונה: ג</p>
+        </div>
+        
+        <div class="question">
+            <p>כיצד ניתן לבדוק את האפקטיביות של אלגוריתם הלמידה מחשב?</p>
+            <div class="options">
+        <p>א. יצירה מחודשת של המידע עם רנדום אחר</p><p>ב. שימוש במשוואת קרוס-וולידציה</p><p>ג. ביקורת על בסיס מאגרי נתונים סטנדרטים</p><p>ד. השוואה למודל פרספקטיבה בלבד</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer7')">הצג תשובה</button>
+            <p id="answer7" class="answer">תשובה נכונה: ב</p>
+        </div>
+        
+        <h2>שאלות פתוחות</h2>
+    
+        <div class="open-question">
+            <p>הסבר את ההבדל בין SVM לאלגוריתם פרספטרון.</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer0')">הצג תשובה</button>
+            <p id="open-answer0" class="answer-text">SVM משפר את ההכללה של המודל על ידי בחירת hyperplane עם המרווח המקסימלי, בעוד שפרספטרון עובד עם עדכון פשוט של משקולות.</p>
+        </div>
+        
+        <div class="open-question">
+            <p>כיצד משפיעים וקטורים תמיכה על התוצאה הסופית של SVM?</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer1')">הצג תשובה</button>
+            <p id="open-answer1" class="answer-text">וקטורים תמיכה משפיעים על הקשת המקסימלית של הגבולות המחלקים ומשפיעים ישירות על ההחלטה הסופית.</p>
+        </div>
+        
+        <div class="open-question">
+            <p>מהן הדרישות המינימליות לבניית מודל יעיל באמצעות SVM?</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer2')">הצג תשובה</button>
+            <p id="open-answer2" class="answer-text">הדרישות המינימליות כוללות מערך נתונים מוגדר ללמידה, הגדרה של וקטורים תמיכה, ותהליך אימון שכולל קביעת שיעור הלמידה והבניה של hyperplane.</p>
+        </div>
+        
+    </div>
+
+    </body>
+    </html>
+    

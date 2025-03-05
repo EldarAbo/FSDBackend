@@ -1,9 +1,12 @@
 import openai
 import json
 import time
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Step 1: Read API key from file
-def read_api_key(file_path="api_key.txt"):
+def read_api_key(file_path = os.path.join(script_dir, 'api_key.txt')):
     with open(file_path, "r") as f:
         return f.read().strip()
 
@@ -96,7 +99,7 @@ if not response_text:
 # Step 9: Save Response to JSON File
 json_output = {"summary": response_text}
 
-with open("response.json", "w", encoding="utf-8") as json_file:
+with open("response1.json", "w", encoding="utf-8") as json_file:
     json.dump(json_output, json_file, indent=4)
 
 print("Response saved to response.json")
