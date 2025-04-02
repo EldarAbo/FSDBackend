@@ -1,0 +1,174 @@
+
+    <!DOCTYPE html>
+    <html lang="he">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>מבחן</title>
+        <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Assistant', sans-serif;
+                direction: rtl;
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #89f7fe, #66a6ff);
+                color: #333;
+            }
+            .container {
+                max-width: 800px;
+                margin: 40px auto;
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+            h1, h2 {
+                text-align: center;
+                color: #2c3e50;
+            }
+            .question, .open-question {
+                margin-bottom: 25px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                border-left: 5px solid #2980b9;
+            }
+            .question p, .open-question p {
+                font-size: 18px;
+                margin: 10px 0;
+            }
+            .options p {
+                margin: 8px 0;
+                padding: 8px;
+                background-color: #ecf0f1;
+                border-radius: 4px;
+            }
+            .answer, .answer-text {
+                font-weight: bold;
+                color: #27ae60;
+                margin-top: 15px;
+                display: none;
+            }
+            .show-answer-btn {
+                margin-top: 15px;
+                padding: 8px 15px;
+                background-color: #2980b9;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            .show-answer-btn:hover {
+                background-color: #3498db;
+            }
+        </style>
+        <script>
+            function toggleAnswer(id) {
+                var answer = document.getElementById(id);
+                answer.style.display = (answer.style.display === "none" || answer.style.display === "") ? "block" : "none";
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>מבחן</h1>
+            <h2>שאלות רב-ברירה</h2>
+    
+        <div class="question">
+            <p>מה היתרון העיקרי של שימוש ב-Random Forest לעומת עץ החלטה יחיד?</p>
+            <div class="options">
+        <p>מניעת overfitting באמצעות שילוב עצים רבים</p><p>יצירת מודל פשוט להבנה</p><p>הפחתת הצורך במספר נתונים גדול</p><p>שיפור מהירות החישוב בזמן אימון</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer0')">הצג תשובה</button>
+            <p id="answer0" class="answer">תשובה נכונה: מניעת overfitting באמצעות שילוב עצים רבים</p>
+        </div>
+        
+        <div class="question">
+            <p>איזה אלגוריתם משתמש בגרעיני (kernels) כדי להתמודד עם סיווג לא-לינארי?</p>
+            <div class="options">
+        <p>K-Nearest Neighbors</p><p>לוגיסטיק רגרסיה</p><p>SVM</p><p>רשת נוירונים עמוקה</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer1')">הצג תשובה</button>
+            <p id="answer1" class="answer">תשובה נכונה: SVM</p>
+        </div>
+        
+        <div class="question">
+            <p>מהי מטרת המטריצה 'confusion matrix' בהערכת ביצועי המודל?</p>
+            <div class="options">
+        <p>הפחתת מספר המשתנים באמצעות הפחתת מימדים</p><p>שיפור מהירות הריצה של המודל</p><p>הערכת ביצועי המודל על ידי ניתוח טעויות הסיווג</p><p>אופטימיזציית הפרמטרים ב-Gradient Descent</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer2')">הצג תשובה</button>
+            <p id="answer2" class="answer">תשובה נכונה: הערכת ביצועי המודל על ידי ניתוח טעויות הסיווג</p>
+        </div>
+        
+        <div class="question">
+            <p>כיצד ניתן למנוע overfitting בעת אימון רשת נוירונים עמוקה?</p>
+            <div class="options">
+        <p>באמצעות שימוש אך ורק באופטימיזציה של כלים</p><p>באמצעות שימוש ב-Regularization, Dropout ואיסוף נתונים</p><p>על ידי הגדלת מספר השכבות בלבד</p><p>על ידי בחירת פונקציות activation שונות</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer3')">הצג תשובה</button>
+            <p id="answer3" class="answer">תשובה נכונה: באמצעות שימוש ב-Regularization, Dropout ואיסוף נתונים</p>
+        </div>
+        
+        <div class="question">
+            <p>כיצד משפיעה בחירת ההיפר-פרמטרים (hyperparameters) על ביצועי מודל SVM?</p>
+            <div class="options">
+        <p>הם משפיעים רק על מהירות האימון</p><p>השפעתם קריטית ומעצבת את גבולות ההחלטה של המודל</p><p>אין להם השפעה מכרעת, המודל תלוי רק בנתונים</p><p>משמשים רק לשיפור חווית המשתמש בממשק</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer4')">הצג תשובה</button>
+            <p id="answer4" class="answer">תשובה נכונה: השפעתם קריטית ומעצבת את גבולות ההחלטה של המודל</p>
+        </div>
+        
+        <div class="question">
+            <p>מהי חשיבות ה-embedding בשיטות עיבוד שפה טבעית (NLP)?</p>
+            <div class="options">
+        <p>אסטרטגיה לניתוח גרפי של טקסט</p><p>גיבוש משפטים סינטקטיים בלבד</p><p>ליצירת ייצוגים מתמטיים של מילים המקנים משמעות סמנטית</p><p>שיטה לשיפור ביצועי מסד נתונים איכותי</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer5')">הצג תשובה</button>
+            <p id="answer5" class="answer">תשובה נכונה: ליצירת ייצוגים מתמטיים של מילים המקנים משמעות סמנטית</p>
+        </div>
+        
+        <div class="question">
+            <p>במידה ויש נתונים מוגבלים, איזו טכניקה יכולה לשפר את יכולת ההכללה של המודל?</p>
+            <div class="options">
+        <p>Data Augmentation ואף שילוב של Transfer Learning</p><p>הדרכת המודל רק על תתי קבוצות נתונים</p><p>הגדלת המודל ללא שינוי בנתונים</p><p>הפחתת כמות הנתונים</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer6')">הצג תשובה</button>
+            <p id="answer6" class="answer">תשובה נכונה: Data Augmentation ואף שילוב של Transfer Learning</p>
+        </div>
+        
+        <div class="question">
+            <p>מהו תהליך Gradient Descent וכיצד הוא משמש בלמידה עמוקה?</p>
+            <div class="options">
+        <p>שיטה לאיזון המודל באמצעות הגדלת השכבות</p><p>אסטרטגיה לבחירת פונקציות activation</p><p>תהליך העדכון של מערך הנתונים בכל חזרה</p><p>תהליך עדכון משקלי המודל על ידי מינימיזציה של פונקציית עלות</p>
+            </div>
+            <button class="show-answer-btn" onclick="toggleAnswer('answer7')">הצג תשובה</button>
+            <p id="answer7" class="answer">תשובה נכונה: תהליך עדכון משקלי המודל על ידי מינימיזציה של פונקציית עלות</p>
+        </div>
+        
+            <h2>שאלות פתוחות</h2>
+    
+        <div class="open-question">
+            <p>הסבר את עקרונות השיטות Ensemble Learning וכיצד הן משפרות ביצועים במודלים.</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer0')">הצג תשובה</button>
+            <p id="open-answer0" class="answer-text">שיטות Ensemble Learning משלבות מספר מודלים כדי לצמצם את הטעות הכללית; עקרונות אלו כוללים bagging, boosting ו-stacking, שכל אחת מהן מנצלת אסטרטגיות שונות לשיפור הביצועים והתמודדות עם overfitting.</p>
+        </div>
+        
+        <div class="open-question">
+            <p>נתח את השפעת בחירת פונקציות הפעלה (activation functions) על התכנסות והרשטת רשתות נוירונים.</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer1')">הצג תשובה</button>
+            <p id="open-answer1" class="answer-text">פונקציות הפעלה כמו ReLU, sigmoid ו-tanh משפיעות ישירות על מהירות האימון, יציבות הגרדיאנט והיכולת להתמודד עם בעיית vanishing gradient. בחירה נכונה יכולה להאיץ את הלמידה ולשפר את הדיוק של המודל.</p>
+        </div>
+        
+        <div class="open-question">
+            <p>דון באתגרים העיקריים בפיתוח מודלים ללמידת מכונה המבוססים על נתונים לא מאוזנים.</p>
+            <button class="show-answer-btn" onclick="toggleAnswer('open-answer2')">הצג תשובה</button>
+            <p id="open-answer2" class="answer-text">אתגרים מרכזיים כוללים עיוות המלל, חוסר איזון כיתותי והטיה סטטיסטית. יש צורך בטכניקות כמו SMOTE, שימוש במדדי דיוק מותאמים והתאמה של עלות טעויות במודל כדי להתמודד עם בעיה זו.</p>
+        </div>
+        
+        </div>
+    </body>
+    </html>
+    

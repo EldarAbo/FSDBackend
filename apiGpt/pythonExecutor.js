@@ -24,14 +24,18 @@ export function runPythonScript(scriptName, args = []) {
     console.log(`Executing: ${command}`);
     
     exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error executing Python script: ${error.message}`);
-        reject(error);
-        return;
-      }
+      // Always log output for debugging
+      console.log(`Python stdout: ${stdout}`);
       
       if (stderr) {
-        console.warn(`Python script warning: ${stderr}`);
+        console.error(`Python stderr: ${stderr}`);
+      }
+      
+      if (error) {
+        console.error(`Python exit code: ${error.code}`);
+        console.error(`Python error message: ${error.message}`);
+        reject(new Error(`Python script failed: ${stderr || error.message}`));
+        return;
       }
       
       resolve(stdout);

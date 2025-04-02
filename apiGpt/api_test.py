@@ -16,7 +16,7 @@ api_key = read_api_key()
 openai_client = openai.OpenAI(api_key=api_key)
 
 # Step 2: Upload the file
-file_path = "1.pdf"  # Change to your file path
+file_path = os.path.join(script_dir, "1.pdf") 
 with open(file_path, "rb") as file:
     uploaded_file = openai_client.files.create(
         file=file,
