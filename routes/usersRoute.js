@@ -82,7 +82,7 @@ router.get("/", usersController.getAllUsers);
  *         description: Server error.
  */
 
-router.get("/:username", usersController.getUserByUsername);
+router.get("/:username", usersController.getUserByusername);
 
 
 /**
@@ -175,7 +175,7 @@ router.post("/", usersController.createAUser);
  *         description: Server error.
  */
 
-router.put("/:username", usersController.updateUserEmailByUsername);
+router.put("/:username", usersController.updateUserEmailByusername);
 
 
 /**
@@ -202,10 +202,10 @@ router.put("/:username", usersController.updateUserEmailByUsername);
  *         description: Server error.
  */
 
-router.delete("/:username", usersController.deleteUserByUsername);
+router.delete("/:username", usersController.deleteUserByusername);
 
 
-router.post("/:username", upload.single('file'), usersController.updateUserImageByUsername);
+router.post("/:username", upload.single('file'), usersController.updateUserImageByusername);
 
 
 export default router;
