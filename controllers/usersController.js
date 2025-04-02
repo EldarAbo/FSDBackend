@@ -1,4 +1,4 @@
-import usersModel from "../models/usersModel.js";
+import usersModel from "../models/userModel.js";
 
 const getAllUsers = async (req, res) => {
   const filter = req.query.username;
