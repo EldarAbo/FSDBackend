@@ -18,7 +18,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserByUsername = async (req, res) => {
+const getUserByusername = async (req, res) => {
   const username = req.params.username;
 
   try {
@@ -59,7 +59,7 @@ const createAUser = async (req, res) => {
   }
 };
 
-const updateUserEmailByUsername = async (req, res) => {
+const updateUserEmailByusername = async (req, res) => {
   const username = req.params.username;
   const userBody = req.body;
   try {
@@ -75,7 +75,7 @@ const updateUserEmailByUsername = async (req, res) => {
   }
 };
 
-const deleteUserByUsername = async (req, res) => {
+const deleteUserByusername = async (req, res) => {
   const username = req.params.username;
   try {
     const user = await usersModel.findOne({ username: username });
@@ -90,7 +90,7 @@ const deleteUserByUsername = async (req, res) => {
   }
 };
 
-const updateUserImageByUsername = async (req, res) => {
+const updateUserImageByusername = async (req, res) => {
   console.log('Reached image update');
   const user = req.body;
   const userId = user.id;
@@ -140,9 +140,9 @@ const updateUserImageByUsername = async (req, res) => {
 export default {
   getAllUsers,
   createAUser,
-  updateUserEmailByUsername,
-  getUserByUsername,
-  deleteUserByUsername,
-  updateUserImageByUsername,
+  updateUserEmailByusername,
+  getUserByusername,
+  deleteUserByusername,
+  updateUserImageByusername,
   getUserByUserId,
 };

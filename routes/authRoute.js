@@ -28,7 +28,7 @@ import authController from "../controllers/authController.js";
  *       required:
  *         - email
  *         - fullName
- *         - userName
+ *         - username
  *         - password
  *       properties:
  *         email:
@@ -37,18 +37,18 @@ import authController from "../controllers/authController.js";
  *         fullName:
  *           type: string
  *           description: The user fullName
- *         userName:
+ *         username:
  *           type: string
- *           description: The user userName
+ *           description: The user username
  *         password:
  *           type: string
  *           description: The user password
  *       example:
  *         email: 'bob@gmail.com'
  *         fullName: 'bob the mob'
- *         userName: 'john cena'
+ *         username: 'john cena'
  *         password: '123456'
- *         emailOrUserName: 'bob@gmail.com'
+ *         emailOrusername: 'bob@gmail.com'
  */
 
 /**
@@ -220,7 +220,7 @@ router.post("/logout", authController.logout);
  *                     fullName:
  *                       type: string
  *                       example: Google User
- *                     userName:
+ *                     username:
  *                       type: string
  *                       example: googleuser@example.com
  *                     imgUrl:

@@ -21,7 +21,7 @@ const googleSignin = async (req, res) => {
     if (!user) {
       user = await userModel.create({
         email,
-        userName: email,
+        username: email,
         fullName: name,
         imgUrl: payload?.picture,
         password: "google-signin",
@@ -41,13 +41,13 @@ const googleSignin = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { email, userName, fullName, password, imgUrl } = req.body;
+    const { email, username, fullName, password, imgUrl } = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await userModel.create({
       email,
-      userName,
+      username,
       fullName,
       password: hashedPassword,
       imgUrl: imgUrl || null,
@@ -76,8 +76,8 @@ const generateToken = async (userId) => {
 
 const login = async (req, res) => {
   try {
-    const user = await userModel.findOne({ email: req.body.emailOrUserName }) ||
-                  await userModel.findOne({ userName: req.body.emailOrUserName });
+    const user = await userModel.findOne({ email: req.body.emailOrusername }) ||
+                  await userModel.findOne({ username: req.body.emailOrusername });
 
     if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
       return res.status(400).send("Wrong username or password");
