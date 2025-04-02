@@ -1,66 +1,168 @@
 // gptApiService.js
 import { runPythonScript } from './pythonExecutor.js';
-import fs from 'fs/promises';
+import * as fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Processes a PDF file using GPT API and returns the result
- * @param {string} pdfPath - Path to the PDF file
+ * Processes a file (PDF or PPTX) using generate_json.py script
+ * @param {string} filePath - Path to the file
+ * @param {string} fileType - Type of file ('pdf' or 'pptx')
+ * @param {string} generateType - Type of generation ('test' or 'summary')
  * @returns {Promise<Object>} - The processed result as a JSON object
  */
-export async function processPdfWithGpt(pdfPath) {
+export async function generateJsonFromFile(filePath, fileType = 'pdf', generateType = 'summary') {
   try {
-    // Run the Python script that processes the file
-    await runPythonScript('api_test.py');
+    console.log(`Processing file: ${filePath}`);
     
-    // Read the result from the response.json file
-    const resultPath = path.join(__dirname, 'response.json');
-    const resultData = await fs.readFile(resultPath, 'utf8');
+    const absoluteFilePath = path.isAbsolute(filePath) ? filePath : path.resolve(__dirname, filePath);
+    
+    await runPythonScript('generate_json.py', [
+      '--generate-type', generateType,
+      '--file-type', fileType,
+      '--input-file', absoluteFilePath
+    ]);
+    
+    // Fix is here - use fsPromises instead of fs for async read
+    const resultPath = path.join(__dirname, 'output', 'response.json');
+    const resultData = await fsPromises.readFile(resultPath, 'utf8');
     
     return JSON.parse(resultData);
   } catch (error) {
-    console.error('Error processing PDF with GPT:', error);
+    console.error(`Error generating ${generateType} JSON from ${fileType}:`, error);
     throw error;
   }
 }
 
 /**
- * Processes text content using GPT API
- * @param {string} textContent - The text content to process
- * @returns {Promise<Object>} - The processed result as a JSON object
+ * Generates an HTML exam from the processed JSON
+ * @param {string} inputJsonFile - Path to the input JSON file
+ * @param {string} outputHtmlFile - Path to the output HTML file
+ * @returns {Promise<string>} - Path to the generated HTML file
  */
-export async function processTextWithGpt() {
+export async function generateHtmlExam(inputJsonFile = 'output/response.json', outputHtmlFile = 'output/exam.html') {
   try {
-    // Run the Python script without file attachments
-    await runPythonScript('api_test_no_files.py');
+    // Build the full paths
+    const inputPath = path.join(__dirname, inputJsonFile);
+    const outputPath = path.join(__dirname, outputHtmlFile);
     
-    // Read the result from the response.json file
-    const resultPath = path.join(__dirname, 'response.json');
-    const resultData = await fs.readFile(resultPath, 'utf8');
+    // Run the Python script to generate HTML from JSON with the required arguments
+    await runPythonScript('generate_test_html_from_json.py', [
+      '--input-file', inputPath,
+      '--output-file', outputPath
+    ]);
+
+    // Return the path to the HTML file
+    return outputPath;
+  } catch (error) {
+    console.error('Error generating HTML exam:', error);
+    throw error;
+  }
+}
+
+/**
+ * Generates an HTML summary from the processed JSON
+ * @param {string} inputJsonFile - Path to the input JSON file
+ * @param {string} outputHtmlFile - Path to the output HTML file
+ * @returns {Promise<string>} - Path to the generated HTML file
+ */
+export async function generateHtmlSummary(inputJsonFile = 'output/response.json', outputHtmlFile = 'output/summary.html') {
+  try {
+    // Build the full paths
+    const inputPath = path.join(__dirname, inputJsonFile);
+    const outputPath = path.join(__dirname, outputHtmlFile);
+    
+    // Run the Python script to generate HTML from JSON with the required arguments
+    await runPythonScript('generate_summary_html_from_json.py', [
+      '--input-file', inputPath,
+      '--output-file', outputPath
+    ]);
+
+    // Return the path to the HTML file
+    return outputPath;
+  } catch (error) {
+    console.error('Error generating HTML summary:', error);
+    throw error;
+  }
+}
+
+/**
+ * Processes a file and generates an HTML exam
+ * @param {string} filePath - Path to the file
+ * @param {string} fileType - Type of file ('pdf' or 'pptx')
+ * @returns {Promise<string>} - Path to the generated HTML file
+ */
+export async function processPdfAndGenerateHtmlExam(filePath = 'input.pdf', fileType = 'pdf') {
+  try {
+    console.log(`Processing PDF file for exam: ${filePath}`); // Add for debugging
+    
+    // Make sure filePath exists
+    if (!fs.existsSync(filePath)) {
+      console.error(`File not found: ${filePath}`);
+      throw new Error(`File not found: ${filePath}`);
+    }
+    
+    // First generate JSON from the file
+    await generateJsonFromFile(filePath, fileType, 'test');
+    
+    // Then generate the HTML exam from the JSON
+    const htmlPath = await generateHtmlExam();
+    
+    return htmlPath;
+  } catch (error) {
+    console.error('Error in processPdfAndGenerateHtmlExam:', error);
+    throw error;
+  }
+}
+
+/**
+ * Processes a file and generates an HTML summary
+ * @param {string} filePath - Path to the file
+ * @param {string} fileType - Type of file ('pdf' or 'pptx')
+ * @returns {Promise<string>} - Path to the generated HTML file
+ */
+export async function processPdfAndGenerateHtmlSummary(filePath = 'input.pdf', fileType = 'pdf') {
+  try {
+    console.log(`Processing PDF file: ${filePath}`); // Add for debugging
+    
+    // Make sure filePath exists
+    if (!fs.existsSync(filePath)) {
+      console.error(`File not found: ${filePath}`);
+      throw new Error(`File not found: ${filePath}`);
+    }
+    
+    // First generate JSON from the file
+    await generateJsonFromFile(filePath, fileType, 'summary');
+    
+    // Then generate the HTML summary from the JSON
+    const htmlPath = await generateHtmlSummary();
+    
+    return htmlPath;
+  } catch (error) {
+    console.error('Error in processPdfAndGenerateHtmlSummary:', error);
+    throw error;
+  }
+}
+
+// Legacy functions kept for backward compatibility
+export async function processPdfWithGpt(pdfPath) {
+  console.warn('processPdfWithGpt is deprecated. Use generateJsonFromFile instead.');
+  return generateJsonFromFile(pdfPath, 'pdf', 'summary');
+}
+
+export async function processTextWithGpt() {
+  console.warn('processTextWithGpt is deprecated. This function needs to be updated.');
+  try {
+    // This function doesn't match your new workflow. It should be updated.
+    const resultPath = path.join(__dirname, 'output', 'response.json');
+    const resultData = await fsPromises.readFile(resultPath, 'utf8');
     
     return JSON.parse(resultData);
   } catch (error) {
     console.error('Error processing text with GPT:', error);
-    throw error;
-  }
-}
-
-/**
- * Generates an HTML exam from the processed GPT response
- * @returns {Promise<string>} - Path to the generated HTML file
- */
-export async function generateHtmlExam() {
-  try {
-    // Run the Python script to generate HTML from JSON
-    await runPythonScript('generate_html_from_json.py');
-
-    // Return the path to the HTML file
-    return path.join(__dirname, 'exam1.html');
-  } catch (error) {
-    console.error('Error generating HTML exam:', error);
     throw error;
   }
 }

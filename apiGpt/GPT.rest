@@ -1,6 +1,8 @@
 
-POST http://localhost:3000/gpt/process-pdf
-
-###Get specific user by its username
+###Generate exam
 
 GET http://localhost:3000/gpt/generate-exam
+
+
+###Generate summary
+GET http://localhost:3000/gpt/generate-summary
