@@ -74,100 +74,101 @@
     <body>
         <div class="container">
             <h1>מבחן</h1>
+    
             <h2>שאלות רב-ברירה</h2>
-    
-        <div class="question">
-            <p>מהי מטרת שיטת Cross-Validation באלגוריתמי למידת מכונה?</p>
-            <div class="options">
-        <p>להקטנת גודלי קבוצת האימון</p><p>להגדלת דגימה של הנתונים</p><p>לשיפור מהירות האימון בלבד</p><p>להערכת ביצוע המודל על נתונים שלא נראו במהלך האימון</p>
-            </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer0')">הצג תשובה</button>
-            <p id="answer0" class="answer">תשובה נכונה: להערכת ביצוע המודל על נתונים שלא נראו במהלך האימון</p>
-        </div>
         
-        <div class="question">
-            <p>באלגוריתם SVM, מהו ה-hyperplane?</p>
-            <div class="options">
-        <p>מערכת לניתוח משתנים נסתרים</p><p>קו שקובע את הגבולות המפרידים בין המחלקות</p><p>קבוצה של מדדים לאבחון ביצועים</p><p>תהליך עיבוד מקדים לנתונים</p>
+            <div class="question">
+                <p>What is the purpose of Cross-Validation?</p>
+                <div class="options">
+            <p>To optimize hyperparameters without grounded data</p><p>To regularize the model and prevent overfitting</p><p>To assess how the results of a statistical analysis will generalize to an independent data set</p><p>To reduce the dimensionality of the dataset</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer0')">הצג תשובה</button>
+                <p id="answer0" class="answer">תשובה נכונה: To assess how the results of a statistical analysis will generalize to an independent data set</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer1')">הצג תשובה</button>
-            <p id="answer1" class="answer">תשובה נכונה: קו שקובע את הגבולות המפרידים בין המחלקות</p>
-        </div>
-        
-        <div class="question">
-            <p>מהו העיקרון של למידת עומק (Deep Learning)?</p>
-            <div class="options">
-        <p>בניית מודלים סטטיסטיים מבוססי עץ החלטה</p><p>יישום טכניקות סיווג פשוטות על נתונים דו-ממדיים</p><p>שימוש ברשתות עצביות עם שכבות מרובות לניתוח נתונים מורכבים</p><p>שימוש באלגוריתמים גנריים ללא התאמה ספציפית</p>
+            
+            <div class="question">
+                <p>Which method is often used in supervised learning?</p>
+                <div class="options">
+            <p>K-Means Clustering</p><p>Naive Bayes Classifier</p><p>Principal Component Analysis</p><p>Hierarchical Clustering</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer1')">הצג תשובה</button>
+                <p id="answer1" class="answer">תשובה נכונה: Naive Bayes Classifier</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer2')">הצג תשובה</button>
-            <p id="answer2" class="answer">תשובה נכונה: שימוש ברשתות עצביות עם שכבות מרובות לניתוח נתונים מורכבים</p>
-        </div>
-        
-        <div class="question">
-            <p>מהי מטרת ה-Regularization במודלים של למידת מכונה?</p>
-            <div class="options">
-        <p>להגדיל את מספר הפיצ'רים הזמינים למודל</p><p>לשנות את חלוקת הנתונים באופן אקראי</p><p>למנוע Overfitting ולשפר את הכללת המודל</p><p>להאיץ את תהליך האימון על ידי קיצוץ נתונים</p>
+            
+            <div class="question">
+                <p>What is an advantage of decision trees?</p>
+                <div class="options">
+            <p>They perform well for high-dimensional data</p><p>They are easy to interpret and visualize</p><p>They require extensive data preprocessing</p><p>They can model only linear relationships</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer2')">הצג תשובה</button>
+                <p id="answer2" class="answer">תשובה נכונה: They are easy to interpret and visualize</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer3')">הצג תשובה</button>
-            <p id="answer3" class="answer">תשובה נכונה: למנוע Overfitting ולשפר את הכללת המודל</p>
-        </div>
-        
-        <div class="question">
-            <p>מתי מומלץ להשתמש בטכניקת Dimensionality Reduction?</p>
-            <div class="options">
-        <p>כאשר רוצים להאיץ את תהליך המיון של נתונים סיווגיים בלבד</p><p>כאשר יש לנו נתונים עם מספר רב של משתנים והמודל סובל ממיעוט ביצועים</p><p>כאשר הנתונים מתפלגים באופן נורמלי ללא רקע מורכב</p><p>כאשר יש צורך להגדיל את מספר המשתנים במודל</p>
+            
+            <div class="question">
+                <p>Which of the following is a disadvantage of using K-Nearest Neighbors?</p>
+                <div class="options">
+            <p>It is robust to outliers</p><p>It requires labeled data for training</p><p>It can handle both categorical and numerical data</p><p>It is sensitive to the curse of dimensionality</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer3')">הצג תשובה</button>
+                <p id="answer3" class="answer">תשובה נכונה: It is sensitive to the curse of dimensionality</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer4')">הצג תשובה</button>
-            <p id="answer4" class="answer">תשובה נכונה: כאשר יש לנו נתונים עם מספר רב של משתנים והמודל סובל ממיעוט ביצועים</p>
-        </div>
-        
-        <div class="question">
-            <p>מהו העיקרון העומד בבסיס שיטת Gradient Descent?</p>
-            <div class="options">
-        <p>שימוש במודל סטטיסטי פשוט ללא חישוב שגיאות</p><p>עדכון מהיר של המשקולות על בסיס סדר אלפביתי של הפיצ'רים</p><p>עדכון הדרגתי של המשקולות בכיוון שיורד את פונקציית האובדן</p><p>בחירת הפיצ'רים החשובים ביותר למודל באופן אקראי</p>
+            
+            <div class="question">
+                <p>What does the term 'overfitting' refer to?</p>
+                <div class="options">
+            <p>A model that ignores the training data completely</p><p>A model that is too simple to capture the underlying data patterns</p><p>A model that fits the training data too closely and fails on new data</p><p>A model that performs well on unseen data</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer4')">הצג תשובה</button>
+                <p id="answer4" class="answer">תשובה נכונה: A model that fits the training data too closely and fails on new data</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer5')">הצג תשובה</button>
-            <p id="answer5" class="answer">תשובה נכונה: עדכון הדרגתי של המשקולות בכיוון שיורד את פונקציית האובדן</p>
-        </div>
-        
-        <div class="question">
-            <p>מהו המאפיין המרכזי של אלגוריתמי Ensemble Methods?</p>
-            <div class="options">
-        <p>התמקדות בבחירת מודלים שמבוססים על Deep Learning בלבד</p><p>הסתמכות על מודל יחיד עם עדכון אגרסיבי</p><p>שילוב של מספר מודלים לצורך שיפור ביצועים וחיזוק הכללה</p><p>הפחתת מורכבות המודל באמצעות דחיסת נתונים</p>
+            
+            <div class="question">
+                <p>In what scenario would you use a support vector machine?</p>
+                <div class="options">
+            <p>When there are categorical features only</p><p>When the dataset is small and unlabeled</p><p>When the classes are linearly separable</p><p>When you want to reduce the size of a dataset</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer5')">הצג תשובה</button>
+                <p id="answer5" class="answer">תשובה נכונה: When the classes are linearly separable</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer6')">הצג תשובה</button>
-            <p id="answer6" class="answer">תשובה נכונה: שילוב של מספר מודלים לצורך שיפור ביצועים וחיזוק הכללה</p>
-        </div>
-        
-        <div class="question">
-            <p>מה מאפשרת שיטת Backpropagation ברשתות עצביות?</p>
-            <div class="options">
-        <p>טיפול בנתונים חסרים באופן ישיר</p><p>עדכון משקולות הרשת על סמך חישוב מדויק של השגיאה בכל שכבה</p><p>בחירת פונקציות הפעלה בצורה רגישה</p><p>קידוד הנתונים לקלט באופן אוטומטי</p>
+            
+            <div class="question">
+                <p>What is a common technique for feature selection?</p>
+                <div class="options">
+            <p>Cross-Validation</p><p>Principal Component Analysis</p><p>Grid Search</p><p>Neural Network Training</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer6')">הצג תשובה</button>
+                <p id="answer6" class="answer">תשובה נכונה: Principal Component Analysis</p>
             </div>
-            <button class="show-answer-btn" onclick="toggleAnswer('answer7')">הצג תשובה</button>
-            <p id="answer7" class="answer">תשובה נכונה: עדכון משקולות הרשת על סמך חישוב מדויק של השגיאה בכל שכבה</p>
-        </div>
-        
+            
+            <div class="question">
+                <p>Which algorithm is primarily used for unsupervised learning?</p>
+                <div class="options">
+            <p>Support Vector Machine</p><p>K-Means Clustering</p><p>Logistic Regression</p><p>Random Forest</p>
+                </div>
+                <button class="show-answer-btn" onclick="toggleAnswer('answer7')">הצג תשובה</button>
+                <p id="answer7" class="answer">תשובה נכונה: K-Means Clustering</p>
+            </div>
+            
             <h2>שאלות פתוחות</h2>
-    
-        <div class="open-question">
-            <p>נתח את היתרונות והחסרונות בביצוע Cross-Validation במודלים של למידת מכונה.</p>
-            <button class="show-answer-btn" onclick="toggleAnswer('open-answer0')">הצג תשובה</button>
-            <p id="open-answer0" class="answer-text">יתרונות: הערכת ביצועים אמינה, שימוש יעיל בנתונים הקיימים והקטנת הסיכון ל-overfitting. חסרונות: עלות חישובית גבוהה, מורכבות נוספת בניהול החלוקת הנתונים ותלות בשיטת החלוקה.</p>
-        </div>
         
-        <div class="open-question">
-            <p>פרט את התהליך של לימוד רשת עצבית באמצעות שיטת Backpropagation.</p>
-            <button class="show-answer-btn" onclick="toggleAnswer('open-answer1')">הצג תשובה</button>
-            <p id="open-answer1" class="answer-text">התהליך מתחיל במעבר קדימה שבו המודל מחשב את הפלט בהתבסס על קלט הנתונים, משם מחשבים את השגיאה בין הפלט הרצוי למתקבל, ולאחר מכן מתבצע עדכון הדרגתי של המשקולות באמצעות חישוב הנגזרת של פונקציית האובדן, מה שמאפשר שיפור מדוד במודל.</p>
-        </div>
-        
-        <div class="open-question">
-            <p>הסבר בצורה מעמיקה כיצד שימוש ב-Regularization עוזר להפחתת Overfitting במודלים של למידת מכונה.</p>
-            <button class="show-answer-btn" onclick="toggleAnswer('open-answer2')">הצג תשובה</button>
-            <p id="open-answer2" class="answer-text">Regularization פועל על ידי הוספת מונח עונש למשקולות המודל (כגון L1 או L2), מה שמגביל את הגדלים שלהן ומונע את ההתאמה המוחלטת על דגימת האימון. כך המודל מיצב את עצמו באופן כללי יותר, ובכך משפר את יכולת הכללתו על נתונים חדשים ואינו זקוק לזיכרון של רעשים ומאפיינים לא מדויקים בנתונים.</p>
-        </div>
-        
+            <div class="open-question">
+                <p>Explain the importance of hyperparameter tuning in machine learning.</p>
+                <button class="show-answer-btn" onclick="toggleAnswer('open-answer0')">הצג תשובה</button>
+                <p id="open-answer0" class="answer-text">Hyperparameter tuning is crucial as it helps in finding the best performance for a model by optimizing the parameters that govern the training process. These parameters can significantly affect the model's performance and its ability to generalize to unseen data.</p>
+            </div>
+            
+            <div class="open-question">
+                <p>Discuss the difference between bagging and boosting in ensemble learning.</p>
+                <button class="show-answer-btn" onclick="toggleAnswer('open-answer1')">הצג תשובה</button>
+                <p id="open-answer1" class="answer-text">Bagging reduces variance by training multiple models independently and averaging their predictions, while boosting reduces bias by combining multiple weak learners sequentially, where each model focuses on correcting errors made by the previous ones.</p>
+            </div>
+            
+            <div class="open-question">
+                <p>Describe a scenario where using a neural network is preferable over traditional models.</p>
+                <button class="show-answer-btn" onclick="toggleAnswer('open-answer2')">הצג תשובה</button>
+                <p id="open-answer2" class="answer-text">Neural networks are preferable in scenarios involving complex patterns and large datasets, such as image recognition or natural language processing, where traditional models might struggle to capture the intricacies of the data.</p>
+            </div>
+            
         </div>
     </body>
     </html>

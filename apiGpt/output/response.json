@@ -2,98 +2,98 @@
     "exam": {
         "multiple_choice": [
             {
-                "question": "מהי מטרת שיטת Cross-Validation באלגוריתמי למידת מכונה?",
+                "question": "What is the purpose of Cross-Validation?",
                 "options": [
-                    "להערכת ביצוע המודל על נתונים שלא נראו במהלך האימון",
-                    "להקטנת גודלי קבוצת האימון",
-                    "להגדלת דגימה של הנתונים",
-                    "לשיפור מהירות האימון בלבד"
+                    "To assess how the results of a statistical analysis will generalize to an independent data set",
+                    "To regularize the model and prevent overfitting",
+                    "To reduce the dimensionality of the dataset",
+                    "To optimize hyperparameters without grounded data"
                 ],
-                "answer": "להערכת ביצוע המודל על נתונים שלא נראו במהלך האימון"
+                "answer": "To assess how the results of a statistical analysis will generalize to an independent data set"
             },
             {
-                "question": "באלגוריתם SVM, מהו ה-hyperplane?",
+                "question": "Which method is often used in supervised learning?",
                 "options": [
-                    "קו שקובע את הגבולות המפרידים בין המחלקות",
-                    "קבוצה של מדדים לאבחון ביצועים",
-                    "מערכת לניתוח משתנים נסתרים",
-                    "תהליך עיבוד מקדים לנתונים"
+                    "K-Means Clustering",
+                    "Naive Bayes Classifier",
+                    "Principal Component Analysis",
+                    "Hierarchical Clustering"
                 ],
-                "answer": "קו שקובע את הגבולות המפרידים בין המחלקות"
+                "answer": "Naive Bayes Classifier"
             },
             {
-                "question": "מהו העיקרון של למידת עומק (Deep Learning)?",
+                "question": "What is an advantage of decision trees?",
                 "options": [
-                    "שימוש ברשתות עצביות עם שכבות מרובות לניתוח נתונים מורכבים",
-                    "בניית מודלים סטטיסטיים מבוססי עץ החלטה",
-                    "שימוש באלגוריתמים גנריים ללא התאמה ספציפית",
-                    "יישום טכניקות סיווג פשוטות על נתונים דו-ממדיים"
+                    "They require extensive data preprocessing",
+                    "They can model only linear relationships",
+                    "They are easy to interpret and visualize",
+                    "They perform well for high-dimensional data"
                 ],
-                "answer": "שימוש ברשתות עצביות עם שכבות מרובות לניתוח נתונים מורכבים"
+                "answer": "They are easy to interpret and visualize"
             },
             {
-                "question": "מהי מטרת ה-Regularization במודלים של למידת מכונה?",
+                "question": "Which of the following is a disadvantage of using K-Nearest Neighbors?",
                 "options": [
-                    "למנוע Overfitting ולשפר את הכללת המודל",
-                    "להגדיל את מספר הפיצ'רים הזמינים למודל",
-                    "להאיץ את תהליך האימון על ידי קיצוץ נתונים",
-                    "לשנות את חלוקת הנתונים באופן אקראי"
+                    "It is sensitive to the curse of dimensionality",
+                    "It requires labeled data for training",
+                    "It is robust to outliers",
+                    "It can handle both categorical and numerical data"
                 ],
-                "answer": "למנוע Overfitting ולשפר את הכללת המודל"
+                "answer": "It is sensitive to the curse of dimensionality"
             },
             {
-                "question": "מתי מומלץ להשתמש בטכניקת Dimensionality Reduction?",
+                "question": "What does the term 'overfitting' refer to?",
                 "options": [
-                    "כאשר יש לנו נתונים עם מספר רב של משתנים והמודל סובל ממיעוט ביצועים",
-                    "כאשר יש צורך להגדיל את מספר המשתנים במודל",
-                    "כאשר הנתונים מתפלגים באופן נורמלי ללא רקע מורכב",
-                    "כאשר רוצים להאיץ את תהליך המיון של נתונים סיווגיים בלבד"
+                    "A model that performs well on unseen data",
+                    "A model that is too simple to capture the underlying data patterns",
+                    "A model that fits the training data too closely and fails on new data",
+                    "A model that ignores the training data completely"
                 ],
-                "answer": "כאשר יש לנו נתונים עם מספר רב של משתנים והמודל סובל ממיעוט ביצועים"
+                "answer": "A model that fits the training data too closely and fails on new data"
             },
             {
-                "question": "מהו העיקרון העומד בבסיס שיטת Gradient Descent?",
+                "question": "In what scenario would you use a support vector machine?",
                 "options": [
-                    "עדכון הדרגתי של המשקולות בכיוון שיורד את פונקציית האובדן",
-                    "בחירת הפיצ'רים החשובים ביותר למודל באופן אקראי",
-                    "עדכון מהיר של המשקולות על בסיס סדר אלפביתי של הפיצ'רים",
-                    "שימוש במודל סטטיסטי פשוט ללא חישוב שגיאות"
+                    "When the classes are linearly separable",
+                    "When you want to reduce the size of a dataset",
+                    "When there are categorical features only",
+                    "When the dataset is small and unlabeled"
                 ],
-                "answer": "עדכון הדרגתי של המשקולות בכיוון שיורד את פונקציית האובדן"
+                "answer": "When the classes are linearly separable"
             },
             {
-                "question": "מהו המאפיין המרכזי של אלגוריתמי Ensemble Methods?",
+                "question": "What is a common technique for feature selection?",
                 "options": [
-                    "שילוב של מספר מודלים לצורך שיפור ביצועים וחיזוק הכללה",
-                    "הפחתת מורכבות המודל באמצעות דחיסת נתונים",
-                    "הסתמכות על מודל יחיד עם עדכון אגרסיבי",
-                    "התמקדות בבחירת מודלים שמבוססים על Deep Learning בלבד"
+                    "Cross-Validation",
+                    "Grid Search",
+                    "Principal Component Analysis",
+                    "Neural Network Training"
                 ],
-                "answer": "שילוב של מספר מודלים לצורך שיפור ביצועים וחיזוק הכללה"
+                "answer": "Principal Component Analysis"
             },
             {
-                "question": "מה מאפשרת שיטת Backpropagation ברשתות עצביות?",
+                "question": "Which algorithm is primarily used for unsupervised learning?",
                 "options": [
-                    "עדכון משקולות הרשת על סמך חישוב מדויק של השגיאה בכל שכבה",
-                    "קידוד הנתונים לקלט באופן אוטומטי",
-                    "בחירת פונקציות הפעלה בצורה רגישה",
-                    "טיפול בנתונים חסרים באופן ישיר"
+                    "Logistic Regression",
+                    "K-Means Clustering",
+                    "Support Vector Machine",
+                    "Random Forest"
                 ],
-                "answer": "עדכון משקולות הרשת על סמך חישוב מדויק של השגיאה בכל שכבה"
+                "answer": "K-Means Clustering"
             }
         ],
         "open_questions": [
             {
-                "question": "נתח את היתרונות והחסרונות בביצוע Cross-Validation במודלים של למידת מכונה.",
-                "answer": "יתרונות: הערכת ביצועים אמינה, שימוש יעיל בנתונים הקיימים והקטנת הסיכון ל-overfitting. חסרונות: עלות חישובית גבוהה, מורכבות נוספת בניהול החלוקת הנתונים ותלות בשיטת החלוקה."
+                "question": "Explain the importance of hyperparameter tuning in machine learning.",
+                "answer": "Hyperparameter tuning is crucial as it helps in finding the best performance for a model by optimizing the parameters that govern the training process. These parameters can significantly affect the model's performance and its ability to generalize to unseen data."
             },
             {
-                "question": "פרט את התהליך של לימוד רשת עצבית באמצעות שיטת Backpropagation.",
-                "answer": "התהליך מתחיל במעבר קדימה שבו המודל מחשב את הפלט בהתבסס על קלט הנתונים, משם מחשבים את השגיאה בין הפלט הרצוי למתקבל, ולאחר מכן מתבצע עדכון הדרגתי של המשקולות באמצעות חישוב הנגזרת של פונקציית האובדן, מה שמאפשר שיפור מדוד במודל."
+                "question": "Discuss the difference between bagging and boosting in ensemble learning.",
+                "answer": "Bagging reduces variance by training multiple models independently and averaging their predictions, while boosting reduces bias by combining multiple weak learners sequentially, where each model focuses on correcting errors made by the previous ones."
             },
             {
-                "question": "הסבר בצורה מעמיקה כיצד שימוש ב-Regularization עוזר להפחתת Overfitting במודלים של למידת מכונה.",
-                "answer": "Regularization פועל על ידי הוספת מונח עונש למשקולות המודל (כגון L1 או L2), מה שמגביל את הגדלים שלהן ומונע את ההתאמה המוחלטת על דגימת האימון. כך המודל מיצב את עצמו באופן כללי יותר, ובכך משפר את יכולת הכללתו על נתונים חדשים ואינו זקוק לזיכרון של רעשים ומאפיינים לא מדויקים בנתונים."
+                "question": "Describe a scenario where using a neural network is preferable over traditional models.",
+                "answer": "Neural networks are preferable in scenarios involving complex patterns and large datasets, such as image recognition or natural language processing, where traditional models might struggle to capture the intricacies of the data."
             }
         ]
     }
