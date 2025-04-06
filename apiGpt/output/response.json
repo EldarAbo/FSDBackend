@@ -4,96 +4,96 @@
             {
                 "question": "What is the purpose of Cross-Validation?",
                 "options": [
-                    "To assess how the results of a statistical analysis will generalize to an independent data set",
-                    "To regularize the model and prevent overfitting",
-                    "To reduce the dimensionality of the dataset",
-                    "To optimize hyperparameters without grounded data"
+                    "To evaluate the model's performance",
+                    "To reduce the size of the dataset",
+                    "To increase the complexity of the model",
+                    "To visualize the data better"
                 ],
-                "answer": "To assess how the results of a statistical analysis will generalize to an independent data set"
+                "answer": "To evaluate the model's performance"
             },
             {
-                "question": "Which method is often used in supervised learning?",
+                "question": "Which algorithm is commonly used for classification tasks?",
                 "options": [
                     "K-Means Clustering",
-                    "Naive Bayes Classifier",
-                    "Principal Component Analysis",
-                    "Hierarchical Clustering"
+                    "Linear Regression",
+                    "Support Vector Machine",
+                    "Principal Component Analysis"
                 ],
-                "answer": "Naive Bayes Classifier"
-            },
-            {
-                "question": "What is an advantage of decision trees?",
-                "options": [
-                    "They require extensive data preprocessing",
-                    "They can model only linear relationships",
-                    "They are easy to interpret and visualize",
-                    "They perform well for high-dimensional data"
-                ],
-                "answer": "They are easy to interpret and visualize"
-            },
-            {
-                "question": "Which of the following is a disadvantage of using K-Nearest Neighbors?",
-                "options": [
-                    "It is sensitive to the curse of dimensionality",
-                    "It requires labeled data for training",
-                    "It is robust to outliers",
-                    "It can handle both categorical and numerical data"
-                ],
-                "answer": "It is sensitive to the curse of dimensionality"
+                "answer": "Support Vector Machine"
             },
             {
                 "question": "What does the term 'overfitting' refer to?",
                 "options": [
-                    "A model that performs well on unseen data",
-                    "A model that is too simple to capture the underlying data patterns",
-                    "A model that fits the training data too closely and fails on new data",
-                    "A model that ignores the training data completely"
+                    "A model that performs well on training data but poorly on new data",
+                    "A model that performs well on both training and test data",
+                    "A model that is too simple to capture the underlying patterns",
+                    "A model that has too few parameters"
                 ],
-                "answer": "A model that fits the training data too closely and fails on new data"
+                "answer": "A model that performs well on training data but poorly on new data"
             },
             {
-                "question": "In what scenario would you use a support vector machine?",
+                "question": "What is the main disadvantage of using decision trees?",
                 "options": [
-                    "When the classes are linearly separable",
-                    "When you want to reduce the size of a dataset",
-                    "When there are categorical features only",
-                    "When the dataset is small and unlabeled"
+                    "They are easy to interpret",
+                    "They overfit easily",
+                    "They require a large amount of data",
+                    "They can handle both categorical and numerical data"
                 ],
-                "answer": "When the classes are linearly separable"
+                "answer": "They overfit easily"
             },
             {
-                "question": "What is a common technique for feature selection?",
+                "question": "Which of the following is not a type of supervised learning?",
                 "options": [
-                    "Cross-Validation",
-                    "Grid Search",
-                    "Principal Component Analysis",
-                    "Neural Network Training"
+                    "Regression",
+                    "Classification",
+                    "Clustering",
+                    "Time Series Forecasting"
                 ],
-                "answer": "Principal Component Analysis"
+                "answer": "Clustering"
             },
             {
-                "question": "Which algorithm is primarily used for unsupervised learning?",
+                "question": "What does 'feature scaling' accomplish?",
                 "options": [
-                    "Logistic Regression",
-                    "K-Means Clustering",
-                    "Support Vector Machine",
-                    "Random Forest"
+                    "Increases the dimensions of the data",
+                    "Standardizes the range of the features",
+                    "Reduces noise in the data",
+                    "Improves the interpretability of the model"
                 ],
-                "answer": "K-Means Clustering"
+                "answer": "Standardizes the range of the features"
+            },
+            {
+                "question": "Which metric is commonly used to evaluate classification models?",
+                "options": [
+                    "Mean Absolute Error",
+                    "Confusion Matrix",
+                    "Root Mean Square Error",
+                    "R-squared"
+                ],
+                "answer": "Confusion Matrix"
+            },
+            {
+                "question": "What is the purpose of a training set?",
+                "options": [
+                    "To fine-tune the model parameters",
+                    "To test the final model's performance",
+                    "To visualize the data distribution",
+                    "To generate new data points"
+                ],
+                "answer": "To fine-tune the model parameters"
             }
         ],
         "open_questions": [
             {
-                "question": "Explain the importance of hyperparameter tuning in machine learning.",
-                "answer": "Hyperparameter tuning is crucial as it helps in finding the best performance for a model by optimizing the parameters that govern the training process. These parameters can significantly affect the model's performance and its ability to generalize to unseen data."
+                "question": "Describe the role of the hyperplane in Support Vector Machines.",
+                "answer": "The hyperplane in SVM acts as a decision boundary that separates different classes in the feature space."
             },
             {
-                "question": "Discuss the difference between bagging and boosting in ensemble learning.",
-                "answer": "Bagging reduces variance by training multiple models independently and averaging their predictions, while boosting reduces bias by combining multiple weak learners sequentially, where each model focuses on correcting errors made by the previous ones."
+                "question": "Explain the concept of overfitting in machine learning.",
+                "answer": "Overfitting occurs when a model learns the training data too well, capturing noise along with the underlying pattern, resulting in poor generalization to new data."
             },
             {
-                "question": "Describe a scenario where using a neural network is preferable over traditional models.",
-                "answer": "Neural networks are preferable in scenarios involving complex patterns and large datasets, such as image recognition or natural language processing, where traditional models might struggle to capture the intricacies of the data."
+                "question": "What are the advantages of using ensemble methods in machine learning?",
+                "answer": "Ensemble methods improve the accuracy of models by combining predictions from multiple models, thus reducing the risk of overfitting and increasing robustness."
             }
         ]
     }
