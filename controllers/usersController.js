@@ -1,148 +1,68 @@
-import usersModel from "../models/userModel.js";
+import bcrypt from "bcrypt";
+import userModel from "../models/userModel.js";
 
-const getAllUsers = async (req, res) => {
-  const filter = req.query.username;
-  console.log("reached getallusers");
-  try {
-    let users;
-    if (filter) {
-      users = await usersModel.find({ username: filter });
-    } else {
-      users = await usersModel.find();
-    }
-    
-    // Always return an array even if empty
-    res.send(users);
-  } catch (error) {
-    res.status(400).send(error.message);
+class UsersController {
+  constructor() {
+    this.model = userModel;
   }
-};
 
-const getUserByusername = async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await usersModel.findOne({ username: username });
-    if (user) {
-      res.send(user);
-    } else {
-      res.status(404).send("user not found");
-    }
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
-const getUserByUserId = async (req, res) => {
-  const userId = req.params._id;
-
-  try {
-    const user = await usersModel.findOne({ _id: userId });
-    if (user) {
-      res.send(user);
-    } else {
-      res.status(404).send("user not found");
-    }
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
-const createAUser = async (req, res) => {
-  const userBody = req.body;
-  console.log('User creation reached', req.body);
-  try {
-    const user = await usersModel.create(userBody);
-    res.status(201).send(user);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
-const updateUserEmailByusername = async (req, res) => {
-  const username = req.params.username;
-  const userBody = req.body;
-  try {
-    const user = await usersModel.findOne({ username: username });
-    if (!user) {
-      return res.status(404).send("user not found");
-    }
-    
-    const result = await usersModel.updateOne({ username: username }, { $set: { email: userBody.content } });
-    res.send(result);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
-const deleteUserByusername = async (req, res) => {
-  const username = req.params.username;
-  try {
-    const user = await usersModel.findOne({ username: username });
-    if (!user) {
-      return res.status(404).send("user not found");
-    }
-    
-    const result = await usersModel.deleteOne({ username: username });
-    res.send(result);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-};
-
-const updateUserImageByusername = async (req, res) => {
-  console.log('Reached image update');
-  const user = req.body;
-  const userId = user.id;
-  const port = process.env.PORT;
-
-  try {
-    // If there's a file, upload it using the file route
-    if (req.file) {
-      console.log('reached file creation');
-      
-      // Create form data for file upload
-      const formData = new FormData();
-      const fileBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
-      formData.append('file', fileBlob, req.file.originalname);
-
-      // Make request to your file upload endpoint
-      const response = await fetch(process.env.BASE_URL + `:${port}/storage?imgId=${userId}`, {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload file');
+  async getById(req, res) {
+    const id = req.params.id;
+    try {
+      const item = await this.model.findById(id);
+      if (item != null) {
+        res.send(item);
+      } else {
+        res.status(404).send("not found");
       }
-
-      const fileData = await response.json();
-      
-      // Update post with file URL
-      if (fileData.url) {
-        const finalUrl = process.env.BASE_URL + `:${port}/storage/${userId}` + '/' + fileData.url.split('/').pop();
-        console.log("photo file url", finalUrl);
-        user.imgUrl = finalUrl;
-        console.log("User file url", user.imgUrl);
-        await usersModel.updateOne({ username: user.username }, { $set: { imgUrl: finalUrl } });
-      }
-      // Return the complete updated post
-      res.status(201).json({ status: 201, message: 'Image updated successfully' });
-    } else {
-      // Handle case when no file is provided
-      res.status(400).send("No file provided");
+    } catch (error) {
+      res.status(400).send(error);
     }
-  } catch (error) {
-    res.status(400).send(error.message);
   }
-};
 
-export default {
-  getAllUsers,
-  createAUser,
-  updateUserEmailByusername,
-  getUserByusername,
-  deleteUserByusername,
-  updateUserImageByusername,
-  getUserByUserId,
-};
+  async create(req, res) {
+    try {
+      const password = req.body.password;
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const user = {
+        ...req.body,
+        password: hashedPassword,
+      };
+
+      const item = await this.model.create(user);
+      res.status(201).send(item);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  async deleteItem(req, res) {
+    const id = req.params.id;
+    try {
+      const result = await this.model.findByIdAndDelete(id);
+      res.status(200).send(result);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  async updateItem(req, res) {
+    const id = req.params.id;
+    const body = req.body;
+    try {
+      const result = await this.model.findByIdAndUpdate(id, body, { new: true });
+      if (!result) {
+        res.status(404).send();
+      } else {
+        res.status(200).send(result);
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+}
+
+const usersController = new UsersController();
+export default usersController;
