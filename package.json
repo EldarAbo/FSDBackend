@@ -5,8 +5,8 @@
     "main": "app.js",
     "type": "module",
     "scripts": {
-        "setup": "npm install && pip install -r requirements.txt",
-        "postinstall": "pip install -r requirements.txt",
+        "setup": "npm install && python pip install -r requirements.txt",
+        "postinstall": "python pip install -r requirements.txt",
         "start": "node app.js",
         "dev": "nodemon app.js",
         "test:auth": "node --experimental-vm-modules node_modules/jest/bin/jest.js Auth.test.js --detectOpenHandles"
