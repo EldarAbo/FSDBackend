@@ -1,75 +1,102 @@
-
-    <!DOCTYPE html>
-    <html lang="he" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>JSON to HTML</title>
-        <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Assistant', sans-serif;
-                direction: rtl;
-                margin: 0;
-                padding: 0;
-                background: linear-gradient(135deg, #89f7fe, #66a6ff);
-                color: #333;
-                text-align: right;
-            }
-            .container {
-                max-width: 900px;
-                margin: 40px auto;
-                background-color: #fff;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            }
-            h2 {
-                text-align: center;
-                color: #2c3e50;
-                background-color: #f0f0f0;
-                padding: 12px;
-                border-radius: 5px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                margin-bottom: 20px;
-            }
-            p {
-                font-size: 16px;
-                line-height: 1.6;
-            }
-            pre {
-                background: #2d2d2d;
-                color: #f8f8f8;
-                padding: 12px;
-                border-radius: 5px;
-                overflow-x: auto;
-            }
-            ul {
-                list-style-type: disc;
-                padding-right: 20px;
-                margin-bottom: 20px;
-            }
-            li {
-                background: #ecf0f1;
-                color: #34495e;
-                margin: 5px 0;
-                padding: 10px;
-                border-radius: 5px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-    <h2>summary</h2><p>{
-"subject 1": "The content discusses the importance of digital transformation in businesses, emphasizing how technology has become integral to operational efficiency and customer engagement. It highlights key drivers for digital transformation, including market competition, customer expectations, and the need for innovation. Businesses are urged to adopt new technologies such as AI, cloud computing, and data analytics to stay relevant. Examples of successful digital transformation case studies are provided, showing substantial increases in revenue and customer satisfaction as a result of embracing digital tools and methods.",
-"subject 2": [
-"Key Drivers for Digital Transformation: Competition, Customer Demand, Innovation Necessity",
-"Technologies Emphasized: Artificial Intelligence, Cloud Computing, Big Data, Internet of Things",
-"Challenges Businesses Face: Resistance to change, Lack of skilled workforce, Budget constraints",
-"Successful Case Studies: Retail, Healthcare, and Manufacturing sectors",
-"Future Trends: Increased automation, Enhanced customer experience, Data-driven decision-making"
-],
-"subject 3": "def digital_transformation_summary():\n    key_points = {\n        'main_drivers': ['Competition', 'Customer Demand', 'Innovation'],\n        'technologies': ['AI', 'Cloud Computing', 'Big Data', 'IoT'],\n        'challenges': ['Resistance to Change', 'Skills Gap', 'Budget Constraints'],\n        'success_cases': ['Retail: Enhanced Online Sales', 'Healthcare: Improved Patient Outcomes', 'Manufacturing: Streamlined Operations'],\n        'future_trends': ['Automation', 'Customer Experience Enhancement', 'Data Analytics']\n    }\n    return key_points",
-"subject 4": "{\n    'digital_transformation': {\n        'benefits': ['Increased Efficiency', 'Higher Customer Engagement', 'Revenue Growth'],\n        'necessary_steps': ['Assess Current State', 'Define Vision', 'Implement New Technologies', 'Monitor and Adjust']\n    }\n}"
-}</p><h2>subjects</h2><ul><li>Extracted from text</li></ul></div></body></html>
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            direction: rtl;
+            text-align: right;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: right;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f8;
+            padding: 16px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            direction: ltr;
+            text-align: left;
+        }
+        code.code-block {
+            display: block;
+            padding: 10px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-right: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            background: #ecf0f1;
+            color: #34495e;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: right;
+        }
+        nav {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav li {
+            margin: 5px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <a id="top"></a>
+    <div class="container">
+<nav><h2>תוכן העניינים</h2><ul><li><a href='#subject_1'>subject 1</a></li><li><a href='#subject_2'>subject 2</a></li><li><a href='#subject_3'>subject 3</a></li><li><a href='#subject_4'>subject 4</a></li></ul></nav><section id='subject_1'><h2>subject 1</h2><p dir='ltr'>The content primarily discusses various mathematical functions and their properties in the field of calculus, particularly focusing on limits, continuity, and differentiability. It outlines several functions and equations, analyzing their behaviors as certain variables approach specified values. The text involves rigorous definitions and mathematical notations, including limits of functions as they approach particular points, intricacies related to the domain of functions, and graphs representing these functions. The enumeration of multiple mathematical theorems and examples showcases how these principles apply to different scenarios, specifically in relation to functions defined in two to three-dimensional spaces.</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_2'><h2>subject 2</h2><ul><li><p dir='ltr'>Mathematical functions represented in different forms, such as polynomial, logarithmic, and trigonometric functions.</p></li><li><p dir='ltr'>Analysis of limits of functions as variables approach zero or other critical points.</p></li><li><p dir='ltr'>Visual representations of functions using graphs to illustrate their behaviors and transformations.</p></li><li><p dir='ltr'>Discussion on the continuity and differentiability of functions, with specific examples demonstrating these concepts.</p></li><li><p dir='ltr'>Application of mathematical theorems, including the squeeze theorem and L'Hôpital's rule, to find limits.</p></li><li><p dir='ltr'>Numerical examples illustrating how to compute derivatives and examine the slopes of tangent lines at various points on a curve.</p></li><li><p dir='ltr'>Engagement with multi-variable calculus concepts, exploring the relationships between different variables in higher-dimensional spaces.</p></li></ul><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_3'><h2>subject 3</h2><p dir='ltr'>f(x, y) = ln(y) + x^2 - 5  
+Limit as (x, y) approaches (0,0): 
+ lim (x,y) -> (0,0) f(x,y) = 0 
+Continuity check: 
+For f to be continuous at (0,0), limits from all paths must equal f(0,0) 
+Mathematical operations including addition, subtraction, derivatives, and limits of the functions are utilized as follows: 
+df/dx = lim(h->0) [f(x+h,y) - f(x,y)]/h 
+</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_4'><h2>subject 4</h2><p dir='ltr'>Limit calculations in the form of ε-δ definitions showcasing the behavior of functions as they approach specific values demonstrate the analytical rigor necessary for understanding foundational concepts in calculus.</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section></div></body></html>

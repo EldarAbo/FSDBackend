@@ -80,7 +80,7 @@ def get_prompt(prompt_type, params=None):
     if prompt_type == "test":
         num_american = params.get("num_of_american", 8)
         num_open = params.get("num_of_open", 3)
-        return f"Generate a test with {num_american} American-style multiple choice questions and {num_open} open questions based on the following content. Each question should have 4 options, with exactly one correct answer."
+        return f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided."
     
     elif prompt_type == "summary":
         return "Generate a comprehensive summary of the following content. Include the main topics, key points, and any important details."
@@ -143,7 +143,8 @@ def generate_content(
     VERY IMPORTANT: Your entire response must be valid, parseable JSON only. 
     Do not include any explanatory text, markdown formatting, or code blocks around the JSON.
     """
-    
+    print(content)
+
     # Step 5: Send a Message with Text Input
     message = openai_client.beta.threads.messages.create(
         thread_id=thread_id,

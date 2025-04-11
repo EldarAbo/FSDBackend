@@ -171,4 +171,71 @@ router.get('/generate-summary', async (req, res) => {
   }
 });
 
+
+
+/**
+ * @swagger
+ * /gpt/upload-and-generate-exam:
+ *   post:
+ *     summary: Upload a file and generate an HTML exam in one step
+ *     tags: [GPT]
+ *     description: Uploads a PDF or PPTX file, processes it, and directly generates an HTML exam
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: PDF or PPTX file to be processed
+ *     responses:
+ *       200:
+ *         description: Returns the HTML exam
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *       400:
+ *         description: No file uploaded or invalid file type
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post('/upload-and-generate-exam', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    
+    const filePath = req.file.path;
+    const fileType = req.file.originalname.split('.').pop().toLowerCase();
+    
+    if (fileType !== 'pdf' && fileType !== 'pptx') {
+      return res.status(400).json({ error: 'Only PDF and PPTX files are supported' });
+    }
+    
+    // Process the file and generate the exam in one go
+    const htmlPath = await processPdfAndGenerateHtmlExam(
+      filePath,
+      fileType
+    );
+    
+    res.sendFile(htmlPath);
+  } catch (error) {
+    console.error('Error processing file and generating exam:', error);
+    res.status(500).json({ error: 'Failed to generate exam', details: error.message });
+  }
+});
+
+
 export default router;

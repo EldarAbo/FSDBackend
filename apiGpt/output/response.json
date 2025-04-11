@@ -2,98 +2,98 @@
     "exam": {
         "multiple_choice": [
             {
-                "question": "What is the purpose of Cross-Validation?",
+                "question": "What is the result of (b ± a)(b + a)?",
                 "options": [
-                    "To evaluate the model's performance",
-                    "To reduce the size of the dataset",
-                    "To increase the complexity of the model",
-                    "To visualize the data better"
+                    "b² + a²",
+                    "b² - a²",
+                    "b² + 2ab",
+                    "b² - 2ab"
                 ],
-                "answer": "To evaluate the model's performance"
+                "answer": "b² - a²"
             },
             {
-                "question": "Which algorithm is commonly used for classification tasks?",
+                "question": "What function is expressed as x log(x)?",
                 "options": [
-                    "K-Means Clustering",
-                    "Linear Regression",
-                    "Support Vector Machine",
-                    "Principal Component Analysis"
+                    "Exponent",
+                    "Logarithm",
+                    "Trigonometric",
+                    "Polynomial"
                 ],
-                "answer": "Support Vector Machine"
+                "answer": "Logarithm"
             },
             {
-                "question": "What does the term 'overfitting' refer to?",
+                "question": "Which operation is used in the formula: sin²(θ) + cos²(θ) = 1?",
                 "options": [
-                    "A model that performs well on training data but poorly on new data",
-                    "A model that performs well on both training and test data",
-                    "A model that is too simple to capture the underlying patterns",
-                    "A model that has too few parameters"
+                    "Addition",
+                    "Multiplication",
+                    "Division",
+                    "Subtraction"
                 ],
-                "answer": "A model that performs well on training data but poorly on new data"
+                "answer": "Addition"
             },
             {
-                "question": "What is the main disadvantage of using decision trees?",
+                "question": "In the expression of def integration, what does ∫C e^x dx signify?",
                 "options": [
-                    "They are easy to interpret",
-                    "They overfit easily",
-                    "They require a large amount of data",
-                    "They can handle both categorical and numerical data"
+                    "Antiderivative of exponential function",
+                    "Derivative of constant C",
+                    "Logarithmic integration",
+                    "Trigonometric integral"
                 ],
-                "answer": "They overfit easily"
+                "answer": "Antiderivative of exponential function"
             },
             {
-                "question": "Which of the following is not a type of supervised learning?",
+                "question": "For the trigonometric identity, what does cos(θ - π) equal?",
                 "options": [
-                    "Regression",
-                    "Classification",
-                    "Clustering",
-                    "Time Series Forecasting"
+                    "cos(θ)",
+                    "-cos(θ)",
+                    "sin(θ)",
+                    "-sin(θ)"
                 ],
-                "answer": "Clustering"
+                "answer": "-cos(θ)"
             },
             {
-                "question": "What does 'feature scaling' accomplish?",
+                "question": "What does the integral ∫x² dx produce?",
                 "options": [
-                    "Increases the dimensions of the data",
-                    "Standardizes the range of the features",
-                    "Reduces noise in the data",
-                    "Improves the interpretability of the model"
+                    "x³/3 + C",
+                    "x²/2 + C",
+                    "2x + C",
+                    "ln(x) + C"
                 ],
-                "answer": "Standardizes the range of the features"
+                "answer": "x³/3 + C"
             },
             {
-                "question": "Which metric is commonly used to evaluate classification models?",
+                "question": "What is the derivative of sin(x)?",
                 "options": [
-                    "Mean Absolute Error",
-                    "Confusion Matrix",
-                    "Root Mean Square Error",
-                    "R-squared"
+                    "cos(x)",
+                    "-cos(x)",
+                    "sin(x)",
+                    "tan(x)"
                 ],
-                "answer": "Confusion Matrix"
+                "answer": "cos(x)"
             },
             {
-                "question": "What is the purpose of a training set?",
+                "question": "In the expression for the derivative of ln(x), what does it equal?",
                 "options": [
-                    "To fine-tune the model parameters",
-                    "To test the final model's performance",
-                    "To visualize the data distribution",
-                    "To generate new data points"
+                    "1/x",
+                    "ln(x)",
+                    "e^x",
+                    "x"
                 ],
-                "answer": "To fine-tune the model parameters"
+                "answer": "1/x"
             }
         ],
         "open_questions": [
             {
-                "question": "Describe the role of the hyperplane in Support Vector Machines.",
-                "answer": "The hyperplane in SVM acts as a decision boundary that separates different classes in the feature space."
+                "question": "Explain the relationship between sin(θ) and cos(θ) in terms of their complementary angles.",
+                "answer": "sin(θ) = cos(90° - θ) and cos(θ) = sin(90° - θ); they are co-functions."
             },
             {
-                "question": "Explain the concept of overfitting in machine learning.",
-                "answer": "Overfitting occurs when a model learns the training data too well, capturing noise along with the underlying pattern, resulting in poor generalization to new data."
+                "question": "How does the identity tan²(θ) + 1 = sec²(θ) relate to the Pythagorean theorem?",
+                "answer": "This identity represents the relationship between the sides of a right triangle in the context of trigonometric functions, analogous to a² + b² = c²."
             },
             {
-                "question": "What are the advantages of using ensemble methods in machine learning?",
-                "answer": "Ensemble methods improve the accuracy of models by combining predictions from multiple models, thus reducing the risk of overfitting and increasing robustness."
+                "question": "Describe the impact of integration by parts on solving integral expressions.",
+                "answer": "Integration by parts is a technique that transforms a complex integral into simpler parts, making it easier to evaluate, based on the product rule for differentiation."
             }
         ]
     }
