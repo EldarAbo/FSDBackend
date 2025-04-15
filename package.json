@@ -9,6 +9,7 @@
         "postinstall": "python pip install -r requirements.txt",
         "start": "node app.js",
         "dev": "nodemon app.js",
+        "test:subject": "node --experimental-vm-modules node_modules/jest/bin/jest.js Subject.test.js --detectOpenHandles",
         "test:auth": "node --experimental-vm-modules node_modules/jest/bin/jest.js Auth.test.js --detectOpenHandles"
     },
     "dependencies": {
