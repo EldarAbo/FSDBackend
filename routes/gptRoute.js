@@ -150,27 +150,35 @@ router.get('/generate-exam', async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.get('/generate-summary', async (req, res) => {
+router.post('/generate-summary', upload.single('file'), async (req, res) => {
   try {
-    const projectRoot = path.dirname(__dirname); // Go up one level from routes
-    const filePath = path.join(projectRoot, 'apiGpt', 'input.pdf');
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
     
-    console.log(`Looking for file at: ${filePath}`); // Add for debugging
-    const fileExists = fs.existsSync(filePath);
-    console.log(`File exists: ${fileExists}`); // Add for debugging
+    const filePath = req.file.path;
+    const fileType = req.file.originalname.split('.').pop().toLowerCase();
     
+    if (fileType !== 'pdf' && fileType !== 'pptx') {
+      return res.status(400).json({ error: 'Only PDF and PPTX files are supported' });
+    }
+    
+    // Extract the additional prompt parameter from request body
+    const additionalPrompt = req.body.additionalPrompt || '';  // Default to empty string if not provided
+    
+    // Process the file and generate the summary with the additional prompt
     const htmlPath = await processPdfAndGenerateHtmlSummary(
       filePath,
-      'pdf'
+      fileType,
+      additionalPrompt
     );
     
     res.sendFile(htmlPath);
   } catch (error) {
-    console.error('Error generating summary:', error);
+    console.error('Error processing file and generating summary:', error);
     res.status(500).json({ error: 'Failed to generate summary', details: error.message });
   }
 });
-
 
 
 /**
@@ -224,10 +232,18 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
       return res.status(400).json({ error: 'Only PDF and PPTX files are supported' });
     }
     
-    // Process the file and generate the exam in one go
+    // Extract the new parameters from request body
+    const numAmerican = parseInt(req.body.numAmerican) || 8;  // Default to 8 if not provided
+    const numOpen = parseInt(req.body.numOpen) || 3;          // Default to 3 if not provided
+    const additionalPrompt = req.body.additionalPrompt || '';  // Default to empty string if not provided
+    
+    // Process the file and generate the exam with the new parameters
     const htmlPath = await processPdfAndGenerateHtmlExam(
       filePath,
-      fileType
+      fileType,
+      numAmerican,
+      numOpen,
+      additionalPrompt
     );
     
     res.sendFile(htmlPath);
@@ -236,6 +252,5 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
     res.status(500).json({ error: 'Failed to generate exam', details: error.message });
   }
 });
-
 
 export default router;

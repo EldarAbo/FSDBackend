@@ -14,19 +14,30 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * @param {string} generateType - Type of generation ('test' or 'summary')
  * @returns {Promise<Object>} - The processed result as a JSON object
  */
-export async function generateJsonFromFile(filePath, fileType = 'pdf', generateType = 'summary') {
+export async function generateJsonFromFile(filePath, fileType = 'pdf', generateType = 'summary', numAmerican = 8, numOpen = 3, additionalPrompt = '') {
   try {
     console.log(`Processing file: ${filePath}`);
     
     const absoluteFilePath = path.isAbsolute(filePath) ? filePath : path.resolve(__dirname, filePath);
     
-    await runPythonScript('generate_json.py', [
+    const args = [
       '--generate-type', generateType,
       '--file-type', fileType,
       '--input-file', absoluteFilePath
-    ]);
+    ];
     
-    // Fix is here - use fsPromises instead of fs for async read
+    // Add optional parameters if provided
+    if (generateType === 'test') {
+      args.push('--num-american', numAmerican.toString());
+      args.push('--num-open', numOpen.toString());
+    }
+    
+    if (additionalPrompt) {
+      args.push('--additional-prompt', additionalPrompt);
+    }
+    
+    await runPythonScript('generate_json.py', args);
+    
     const resultPath = path.join(__dirname, 'output', 'response.json');
     const resultData = await fsPromises.readFile(resultPath, 'utf8');
     
@@ -95,20 +106,18 @@ export async function generateHtmlSummary(inputJsonFile = 'output/response.json'
  * @param {string} fileType - Type of file ('pdf' or 'pptx')
  * @returns {Promise<string>} - Path to the generated HTML file
  */
-export async function processPdfAndGenerateHtmlExam(filePath = 'input.pdf', fileType = 'pdf') {
+export async function processPdfAndGenerateHtmlExam(filePath = 'input.pdf', fileType = 'pdf', numAmerican = 8, numOpen = 3, additionalPrompt = '') {
   try {
-    console.log(`Processing PDF file for exam: ${filePath}`); // Add for debugging
+    console.log(`Processing PDF file for exam: ${filePath}`);
     
-    // Make sure filePath exists
     if (!fs.existsSync(filePath)) {
       console.error(`File not found: ${filePath}`);
       throw new Error(`File not found: ${filePath}`);
     }
     
-    // First generate JSON from the file
-    await generateJsonFromFile(filePath, fileType, 'test');
+    // Pass the parameters to generateJsonFromFile
+    await generateJsonFromFile(filePath, fileType, 'test', numAmerican, numOpen, additionalPrompt);
     
-    // Then generate the HTML exam from the JSON
     const htmlPath = await generateHtmlExam();
     
     return htmlPath;
@@ -124,20 +133,18 @@ export async function processPdfAndGenerateHtmlExam(filePath = 'input.pdf', file
  * @param {string} fileType - Type of file ('pdf' or 'pptx')
  * @returns {Promise<string>} - Path to the generated HTML file
  */
-export async function processPdfAndGenerateHtmlSummary(filePath = 'input.pdf', fileType = 'pdf') {
+export async function processPdfAndGenerateHtmlSummary(filePath = 'input.pdf', fileType = 'pdf', additionalPrompt = '') {
   try {
-    console.log(`Processing PDF file: ${filePath}`); // Add for debugging
+    console.log(`Processing PDF file: ${filePath}`);
     
-    // Make sure filePath exists
     if (!fs.existsSync(filePath)) {
       console.error(`File not found: ${filePath}`);
       throw new Error(`File not found: ${filePath}`);
     }
     
-    // First generate JSON from the file
-    await generateJsonFromFile(filePath, fileType, 'summary');
+    // Pass the additional prompt parameter
+    await generateJsonFromFile(filePath, fileType, 'summary', null, null, additionalPrompt);
     
-    // Then generate the HTML summary from the JSON
     const htmlPath = await generateHtmlSummary();
     
     return htmlPath;
