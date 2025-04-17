@@ -80,13 +80,25 @@ def get_prompt(prompt_type, params=None):
     if prompt_type == "test":
         num_american = params.get("num_of_american", 8)
         num_open = params.get("num_of_open", 3)
-        return f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided."
+        additional = params.get("additional_prompt", "")
+        
+        base_prompt = f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided."
+        
+        # Add additional instructions if provided
+        if additional:
+            base_prompt = f"{base_prompt} {additional}"
+            
+        return base_prompt
     
     elif prompt_type == "summary":
-        return "Generate a comprehensive summary of the following content. Include the main topics, key points, and any important details."
-    
-    else:
-        raise ValueError(f"Unknown prompt type: {prompt_type}")
+        additional = params.get("additional_prompt", "")
+        base_prompt = "Generate a comprehensive summary of the following content. Include the main topics, key points, and any important details."
+        
+        # Add additional instructions if provided
+        if additional:
+            base_prompt = f"{base_prompt} {additional}"
+            
+        return base_prompt
 
 def generate_content(
     generate_type, initial_prompt, response_structure, text_input
@@ -551,6 +563,25 @@ def parse_arguments():
         required=True,
         help="Path to the input PDF or PPTX file."
     )
+    # Add new arguments for question counts
+    parser.add_argument(
+        "--num-american", "-ma",
+        type=int, 
+        default=8,
+        help="Number of multiple-choice questions to generate (default: 8)"
+    )
+    parser.add_argument(
+        "--num-open", "-mo",
+        type=int,
+        default=3,
+        help="Number of open-ended questions to generate (default: 3)"
+    )
+    # Add argument for additional prompt instructions
+    parser.add_argument(
+        "--additional-prompt", "-ap",
+        default="",
+        help="Additional instructions to add to the prompt for the AI"
+    )
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -568,7 +599,13 @@ if __name__ == "__main__":
         response_structure = json.load(json_file)
 
     # Define the initial prompt parameters
-    params = {"num_of_american": 8, "num_of_open": 3} if generate_type == "test" else {}
+        params = {
+        "num_of_american": args.num_american,
+        "num_of_open": args.num_open,
+        "additional_prompt": args.additional_prompt
+    } if generate_type == "test" else {
+        "additional_prompt": args.additional_prompt
+    }
     initial_prompt = get_prompt(prompt_type=generate_type, params=params)
 
     # Extract text from the input file
