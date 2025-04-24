@@ -235,7 +235,7 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
     // Extract the new parameters from request body
     const numAmerican = parseInt(req.body.numAmerican) || 8;  // Default to 8 if not provided
     const numOpen = parseInt(req.body.numOpen) || 3;          // Default to 3 if not provided
-    const additionalPrompt = req.body.additionalPrompt || '';  // Default to empty string if not provided
+    const additionalPrompt = req.body.prompt || '';  // Default to empty string if not provided
     
     // Process the file and generate the exam with the new parameters
     const htmlPath = await processPdfAndGenerateHtmlExam(
