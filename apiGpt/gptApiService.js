@@ -33,7 +33,7 @@ export async function generateJsonFromFile(filePath, fileType = 'pdf', generateT
     }
     
     if (additionalPrompt) {
-      args.push('--additional-prompt', additionalPrompt);
+      args.push('--additional-prompt', JSON.stringify(additionalPrompt));
     }
     
     await runPythonScript('generate_json.py', args);

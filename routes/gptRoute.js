@@ -137,20 +137,46 @@ router.get('/generate-exam', async (req, res) => {
 
 /**
  * @swagger
- * /gpt/generate-summary:
- *   get:
- *     summary: Generate an HTML summary
+ * /gpt/upload-and-generate-summary:
+ *   post:
+ *     summary: Upload a file and generate an HTML summary in one step
  *     tags: [GPT]
- *     description: Generates an HTML summary based on previously processed file
- *     produces:
- *       - text/html
+ *     description: Uploads a PDF or PPTX file, processes it, and directly generates an HTML summary
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: PDF or PPTX file to be processed
+ *               additionalPrompt:
+ *                 type: string
+ *                 description: Additional instructions for the summary generation
  *     responses:
  *       200:
  *         description: Returns the HTML summary
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *       400:
+ *         description: No file uploaded or invalid file type
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       500:
  *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
-router.post('/generate-summary', upload.single('file'), async (req, res) => {
+router.post('/upload-and-generate-summary', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -179,7 +205,6 @@ router.post('/generate-summary', upload.single('file'), async (req, res) => {
     res.status(500).json({ error: 'Failed to generate summary', details: error.message });
   }
 });
-
 
 /**
  * @swagger
