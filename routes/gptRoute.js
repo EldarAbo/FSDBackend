@@ -190,7 +190,7 @@ router.post('/upload-and-generate-summary', upload.single('file'), async (req, r
     }
     
     // Extract the additional prompt parameter from request body
-    const additionalPrompt = req.body.additionalPrompt || '';  // Default to empty string if not provided
+    const additionalPrompt = req.body.prompt || '';  // Default to empty string if not provided
     
     // Process the file and generate the summary with the additional prompt
     const htmlPath = await processPdfAndGenerateHtmlSummary(
