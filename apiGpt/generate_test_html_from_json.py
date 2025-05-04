@@ -62,7 +62,7 @@ def generate_html(data):
     
     # Rest of the function continues as before...
     html_content = """
-    <!DOCTYPE html>
+ <!DOCTYPE html>
     <html lang="he">
     <head>
         <meta charset="UTF-8">
@@ -75,27 +75,30 @@ def generate_html(data):
                 direction: rtl;
                 margin: 0;
                 padding: 0;
-                background: linear-gradient(135deg, #89f7fe, #66a6ff);
-                color: #333;
+                background-color: #faf7fc;
+                color: #2c3e50;
             }
             .container {
-                max-width: 800px;
+                max-width: 900px;
                 margin: 40px auto;
-                background-color: #fff;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                padding: 40px;
+                background-color: #f6edf9;
+                border-radius: 16px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             }
             h1, h2 {
                 text-align: center;
-                color: #2c3e50;
+                margin-bottom: 30px;
+                color: #8c4ca8;
             }
             .question, .open-question {
-                margin-bottom: 25px;
-                padding: 20px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                border-left: 5px solid #2980b9;
+                color: #8c4ca8;
+                margin-bottom: 35px;
+                padding: 24px;
+                background-color: #F5F3F7;
+                border-radius: 12px;
+                border-right: 6px solid #4929B9;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             }
             .question p, .open-question p {
                 font-size: 18px;
@@ -103,30 +106,35 @@ def generate_html(data):
             }
             .options p {
                 margin: 8px 0;
-                padding: 8px;
-                background-color: #ecf0f1;
-                border-radius: 4px;
+                padding: 10px 14px;
+                background-color: #FFFFFF;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+            }
+            .options p:hover {
+                background-color: #dce3e8;
             }
             .answer, .answer-text {
-                font-weight: bold;
-                color: #27ae60;
-                margin-top: 15px;
+                font-weight: 600;
+                color: #8c4ca8;
+                margin-top: 18px;
                 display: none;
             }
             .show-answer-btn {
                 margin-top: 15px;
-                padding: 8px 15px;
-                background-color: #2980b9;
+                padding: 10px 20px;
+                background-color: #4929B9;
                 color: #fff;
                 border: none;
-                border-radius: 4px;
+                border-radius: 8px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
             }
             .show-answer-btn:hover {
-                background-color: #3498db;
+                background-color: #8c4ca8;
             }
         </style>
+
         <script>
             function toggleAnswer(id) {
                 var answer = document.getElementById(id);

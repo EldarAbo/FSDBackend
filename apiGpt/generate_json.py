@@ -92,7 +92,7 @@ def get_prompt(prompt_type, params=None):
     
     elif prompt_type == "summary":
         additional = params.get("additional_prompt", "")
-        base_prompt = "Generate a comprehensive summary of the following content. Include the main topics, key points, and any important details."
+        base_prompt = "Create a summary for me based on the material in the files. Make sure the summary is rich in content and well organized. Replace the subjects from the json with actual titles. Make the response as lengthy as possible, min 20 percent of actual size. Notes: Ensure that the summary is detailed, rich in content, and written in Hebrew."
         
         # Add additional instructions if provided
         if additional:
@@ -117,6 +117,7 @@ def generate_content(
         Always return your response as valid JSON following the exact structure provided.
         Do not include any explanations, code blocks, or formatting outside the JSON.
         The JSON should be directly parseable by Python's json.loads() function.
+        Replace each subject title with an appropriate title based on the content in its section.
         """
     else:  # test
         instructions = """

@@ -11,6 +11,7 @@ import {
   processPdfAndGenerateHtmlExam, 
   processPdfAndGenerateHtmlSummary 
 } from '../apiGpt/gptApiService.js';
+import contentController from '../controllers/contentController.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
@@ -48,34 +49,7 @@ const upload = multer({ storage: storage });
  *   description: GPT API integration endpoints
  */
 
-/**
- * @swagger
- * /gpt/process-file:
- *   post:
- *     summary: Process a PDF or PPTX file
- *     tags: [GPT]
- *     description: Uploads a PDF or PPTX file and processes it to generate JSON
- *     consumes:
- *       - multipart/form-data
- *     parameters:
- *       - in: formData
- *         name: file
- *         type: file
- *         required: true
- *         description: PDF or PPTX file to be processed
- *       - in: formData
- *         name: type
- *         type: string
- *         required: false
- *         description: Generation type (test or summary), default is summary
- *     responses:
- *       200:
- *         description: Successfully processed file
- *       400:
- *         description: No file uploaded
- *       500:
- *         description: Server error
- */
+
 router.post('/process-file', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
@@ -98,42 +72,7 @@ router.post('/process-file', upload.single('file'), async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /gpt/generate-exam:
- *   get:
- *     summary: Generate an HTML exam
- *     tags: [GPT]
- *     description: Generates an HTML exam based on previously processed file
- *     produces:
- *       - text/html
- *     responses:
- *       200:
- *         description: Returns the HTML exam
- *       500:
- *         description: Server error
- */
-router.get('/generate-exam', async (req, res) => {
-  try {
-    // Check if input.pdf exists, otherwise use default path
-    const projectRoot = path.dirname(__dirname); // Go up one level from routes
-    const filePath = path.join(projectRoot, 'apiGpt', 'input.pdf');
-    
-    console.log(`Looking for file at: ${filePath}`); // Add for debugging
-    const fileExists = fs.existsSync(filePath);
-    console.log(`File exists: ${fileExists}`); // Add for debugging
-    
-    const htmlPath = await processPdfAndGenerateHtmlExam(
-      filePath,
-      'pdf'
-    );
-    
-    res.sendFile(htmlPath);
-  } catch (error) {
-    console.error('Error generating exam:', error);
-    res.status(500).json({ error: 'Failed to generate exam', details: error.message });
-  }
-});
+
 
 /**
  * @swagger
@@ -272,6 +211,24 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
     );
     
     res.sendFile(htmlPath);
+
+    const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
+    const title = req.body.title || "Generated Eldar Exam"; // Default title if not provided
+    
+    // Create the content record
+    // const newContent = await contentController.create({ 
+    //   userId, 
+    //   content: htmlPath, // Use actual HTML content, not just the file path
+    //   title: title, 
+    //   contentType: "Exam" 
+    // });
+    
+    //console.log("Successfully saved exam content:", newContent._id);
+    // const userExams = await fetch('/content/user/67f3bd679937c252dacacee4/type/Exam', {
+    // }).then(res => res.json());
+    // console.log("user exames:",userExams);
+
+
   } catch (error) {
     console.error('Error processing file and generating exam:', error);
     res.status(500).json({ error: 'Failed to generate exam', details: error.message });

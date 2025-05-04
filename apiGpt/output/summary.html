@@ -3,100 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON to HTML</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+    <title>סיכום</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Assistant', sans-serif;
+            background-color: #faf7fc;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #89f7fe, #66a6ff);
-            color: #333;
+            color: #2c2c2c;
+            direction: rtl;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
-            background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            direction: rtl;
-            text-align: right;
         }
         h2 {
-            text-align: center;
-            color: #2c3e50;
-            background-color: #f0f0f0;
-            padding: 12px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background-color: #8c4ca8;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         p {
             font-size: 16px;
             line-height: 1.6;
-            text-align: right;
-        }
-        pre {
-            background: #2d2d2d;
-            color: #f8f8f8;
-            padding: 16px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 20px 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            direction: ltr;
-            text-align: left;
-        }
-        code.code-block {
-            display: block;
-            padding: 10px;
-        }
-        ul {
-            list-style-type: disc;
-            padding-right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
-        li {
-            background: #ecf0f1;
-            color: #34495e;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: right;
-        }
         nav {
-            background: #f7f7f7;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 5px;
             margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        nav h2 {
+            background: none;
+            color: #8c4ca8;
+            padding: 0;
+            margin-bottom: 10px;
         }
         nav ul {
-            list-style-type: none;
-            padding: 0;
+            list-style: none;
+            padding-right: 0;
         }
         nav li {
             margin: 5px 0;
         }
         nav a {
+            color: #ab7cc3;
             text-decoration: none;
-            color: #2980b9;
+            font-weight: bold;
         }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            font-size: 14px;
+        }
+        li {
+            background: #F0EAF6;
+            color: #ab7cc3;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        a.top-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ab7cc3;
+            text-decoration: none;
+        }
+        section {
+            background-color: #f6edf9;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(140, 76, 168, 0.1);
+        }
+
     </style>
 </head>
 <body>
     <a id="top"></a>
     <div class="container">
-<nav><h2>תוכן העניינים</h2><ul><li><a href='#subject_1'>subject 1</a></li><li><a href='#subject_2'>subject 2</a></li><li><a href='#subject_3'>subject 3</a></li><li><a href='#subject_4'>subject 4</a></li></ul></nav><section id='subject_1'><h2>subject 1</h2><p dir='ltr'>The content primarily discusses various mathematical functions and their properties in the field of calculus, particularly focusing on limits, continuity, and differentiability. It outlines several functions and equations, analyzing their behaviors as certain variables approach specified values. The text involves rigorous definitions and mathematical notations, including limits of functions as they approach particular points, intricacies related to the domain of functions, and graphs representing these functions. The enumeration of multiple mathematical theorems and examples showcases how these principles apply to different scenarios, specifically in relation to functions defined in two to three-dimensional spaces.</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_2'><h2>subject 2</h2><ul><li><p dir='ltr'>Mathematical functions represented in different forms, such as polynomial, logarithmic, and trigonometric functions.</p></li><li><p dir='ltr'>Analysis of limits of functions as variables approach zero or other critical points.</p></li><li><p dir='ltr'>Visual representations of functions using graphs to illustrate their behaviors and transformations.</p></li><li><p dir='ltr'>Discussion on the continuity and differentiability of functions, with specific examples demonstrating these concepts.</p></li><li><p dir='ltr'>Application of mathematical theorems, including the squeeze theorem and L'Hôpital's rule, to find limits.</p></li><li><p dir='ltr'>Numerical examples illustrating how to compute derivatives and examine the slopes of tangent lines at various points on a curve.</p></li><li><p dir='ltr'>Engagement with multi-variable calculus concepts, exploring the relationships between different variables in higher-dimensional spaces.</p></li></ul><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_3'><h2>subject 3</h2><p dir='ltr'>f(x, y) = ln(y) + x^2 - 5  
-Limit as (x, y) approaches (0,0): 
- lim (x,y) -> (0,0) f(x,y) = 0 
-Continuity check: 
-For f to be continuous at (0,0), limits from all paths must equal f(0,0) 
-Mathematical operations including addition, subtraction, derivatives, and limits of the functions are utilized as follows: 
-df/dx = lim(h->0) [f(x+h,y) - f(x,y)]/h 
-</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='subject_4'><h2>subject 4</h2><p dir='ltr'>Limit calculations in the form of ε-δ definitions showcasing the behavior of functions as they approach specific values demonstrate the analytical rigor necessary for understanding foundational concepts in calculus.</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section></div></body></html>
+<nav><h2>תוכן העניינים</h2><ul><li><a href='#מידע_כללי'>מידע כללי</a></li><li><a href='#אלגברה_ליניארית'>אלגברה ליניארית</a></li><li><a href='#פונקציות_קומפלקסיות'>פונקציות קומפלקסיות</a></li><li><a href='#שאלות_והמבחנים'>שאלות והמבחנים</a></li><li><a href='#סיכום_ודגמים'>סיכום ודגמים</a></li></ul></nav><section id='מידע_כללי'><h2>מידע כללי</h2><p dir='rtl'>המסמך מתאר מגוון נושאים הנוגעים למתודולוגיות שונות במתמטיקה, כולל אלגברה ליניארית ופונקציות קומפלקסיות. הוא מציין היבטים תיאורטיים ומעשיים, כגון הדגמה של מושגים מעשיים הקשורים לפונקציות אלה, וכולל חידות המאתגרות את ההבנה העמוקה של החומר.</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='אלגברה_ליניארית'><h2>אלגברה ליניארית</h2><ul><li><p dir='rtl'>המסמך עוסק גם בהגדרות בסיסיות של אלגברה ליניארית, כולל רעיונות של מרחבים ליניאריים, תהליכים Transformations וכן דוגמאות מעשיות.</p></li><li><p dir='rtl'>המושגים המובאים נוגעים לא ליניאריות, ממדים וקר כלים הסתברותיים.</p></li><li><p dir='rtl'>כחלק מההבנה של תהליכים ליניאריים, יש התמקדות על תהליכים הפיכים ועל תהליך ההפיכה שלהם, מה שמביא להבהרת מושגים כמו Kernel ו- Image של פונקציות.</p></li><li><p dir='rtl'>נוסחאות שונות מצביעות על מערכות משוואות ליניאריות והשפעותיהם על תוצאות מתודולוגיות שונות.</p></li></ul><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='פונקציות_קומפלקסיות'><h2>פונקציות קומפלקסיות</h2><ul><li><p dir='rtl'>יש התמקדות על פונקציות קומפלקסיות, והמשמעות שלהן במתודולוגיות מתקדמות.</p></li><li><p dir='rtl'>מוצגות דוגמאות לשימוש יומיומי של פונקציות אלו בבעיות שונות, כגון בחינה של פתרונות בשדה הקומפלקסי.</p></li><li><p dir='rtl'>כחלק מהתהליך המוצג, יש דגש על מצבים מיוחדים, כמו איבר האיבר האדמיתי ובחינת השפעתם של זוגות קומפלקסיים.</p></li></ul><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='שאלות_והמבחנים'><h2>שאלות והמבחנים</h2><ul><li><strong>שאלות רלבנטיות:</strong> <ul><li><p dir='rtl'>מהו הפונקציה R(e(T−1(2+i)) ולמה היא חשובה?</p></li><li><p dir='rtl'>כיצד ניתן להאריך את המושג kernel של פונקציות והאם kernel של T^2 נשאר בגבולות של kernel T?</p></li><li><p dir='rtl'>האם ייתכנו בעיות ממד במצבים שבהם ישנה פונקציה ליניארית שההגדרה שלה לא מקיימת תנאי זכור?</p></li><li><p dir='rtl'>מה העלות של דוגמת פונקציה ליניארית הנרה את הדוברים הקיימים במערכת xmm והאם היא משנה את הפונקציה הקומפלקסית?</p></li></ul></li><li><strong>פתרונות לדוגמאות:</strong> <ul><li><p dir='rtl'>הפתרון לשאלה הראשונה הוא 2, בעוד שהשנייה תלויה במובנות ביניים שונות.</p></li><li><p dir='rtl'>יש להבין כי הפתרונות לשאלות אלו מצביעים על כך שהמושגים שמורכבים על מערכת הם נעלמים, כך שיש מסה דינמית בהם.</p></li></ul></li></ul><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section><section id='סיכום_ודגמים'><h2>סיכום ודגמים</h2><p dir='rtl'>באופן כללי, המסמך מדגיש כיצד מתודולוגיות שונות מתחברות זו לזו, מציעות והמחישות את האופן שבו הלמידה מתמקדת בתהליכים הבסיסיים של תחומים שונים במתמטיקה. ישנה הבנה כי המושגים המוצגים אינם נפרדים, אלא נבנים זה על בסיס זה. חשוב להבין את הדינמיקה שבפונקציות ובתהליכים המניעים את כל הידע הזה</p><p style="text-align:left;"><a href="#top">חזרה למעלה</a></p></section></div></body></html>
