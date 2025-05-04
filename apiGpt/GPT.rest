@@ -6,3 +6,4 @@ GET http://localhost:3000/gpt/generate-exam
 
 ###Generate summary
 GET http://localhost:3000/gpt/generate-summary
+

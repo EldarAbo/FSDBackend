@@ -98,90 +98,98 @@ def json_to_html(json_data, output_file="output/summary.html"):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON to HTML</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet">
+    <title>סיכום</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Assistant', sans-serif;
+            background-color: #faf7fc;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #89f7fe, #66a6ff);
-            color: #333;
+            color: #2c2c2c;
+            direction: rtl;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
-            background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            direction: rtl;
-            text-align: right;
         }
         h2 {
-            text-align: center;
-            color: #2c3e50;
-            background-color: #f0f0f0;
-            padding: 12px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background-color: #8c4ca8;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         p {
             font-size: 16px;
             line-height: 1.6;
-            text-align: right;
-        }
-        pre {
-            background: #2d2d2d;
-            color: #f8f8f8;
-            padding: 16px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 20px 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            direction: ltr;
-            text-align: left;
-        }
-        code.code-block {
-            display: block;
-            padding: 10px;
-        }
-        ul {
-            list-style-type: disc;
-            padding-right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
-        li {
-            background: #ecf0f1;
-            color: #34495e;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: right;
-        }
         nav {
-            background: #f7f7f7;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 5px;
             margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        nav h2 {
+            background: none;
+            color: #8c4ca8;
+            padding: 0;
+            margin-bottom: 10px;
         }
         nav ul {
-            list-style-type: none;
-            padding: 0;
+            list-style: none;
+            padding-right: 0;
         }
         nav li {
             margin: 5px 0;
         }
         nav a {
+            color: #ab7cc3;
             text-decoration: none;
-            color: #2980b9;
+            font-weight: bold;
         }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        pre {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            font-size: 14px;
+        }
+        li {
+            background: #F0EAF6;
+            color: #ab7cc3;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        a.top-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ab7cc3;
+            text-decoration: none;
+        }
+        section {
+            background-color: #f6edf9;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(140, 76, 168, 0.1);
+        }
+
     </style>
 </head>
 <body>

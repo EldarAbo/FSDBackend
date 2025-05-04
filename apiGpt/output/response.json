@@ -2,98 +2,20 @@
     "exam": {
         "multiple_choice": [
             {
-                "question": "What is the result of (b ± a)(b + a)?",
+                "question": "מהו ערך Re(T^{-1}(2 + i))?",
                 "options": [
-                    "b² + a²",
-                    "b² - a²",
-                    "b² + 2ab",
-                    "b² - 2ab"
+                    "4",
+                    "2",
+                    "-3",
+                    "1"
                 ],
-                "answer": "b² - a²"
-            },
-            {
-                "question": "What function is expressed as x log(x)?",
-                "options": [
-                    "Exponent",
-                    "Logarithm",
-                    "Trigonometric",
-                    "Polynomial"
-                ],
-                "answer": "Logarithm"
-            },
-            {
-                "question": "Which operation is used in the formula: sin²(θ) + cos²(θ) = 1?",
-                "options": [
-                    "Addition",
-                    "Multiplication",
-                    "Division",
-                    "Subtraction"
-                ],
-                "answer": "Addition"
-            },
-            {
-                "question": "In the expression of def integration, what does ∫C e^x dx signify?",
-                "options": [
-                    "Antiderivative of exponential function",
-                    "Derivative of constant C",
-                    "Logarithmic integration",
-                    "Trigonometric integral"
-                ],
-                "answer": "Antiderivative of exponential function"
-            },
-            {
-                "question": "For the trigonometric identity, what does cos(θ - π) equal?",
-                "options": [
-                    "cos(θ)",
-                    "-cos(θ)",
-                    "sin(θ)",
-                    "-sin(θ)"
-                ],
-                "answer": "-cos(θ)"
-            },
-            {
-                "question": "What does the integral ∫x² dx produce?",
-                "options": [
-                    "x³/3 + C",
-                    "x²/2 + C",
-                    "2x + C",
-                    "ln(x) + C"
-                ],
-                "answer": "x³/3 + C"
-            },
-            {
-                "question": "What is the derivative of sin(x)?",
-                "options": [
-                    "cos(x)",
-                    "-cos(x)",
-                    "sin(x)",
-                    "tan(x)"
-                ],
-                "answer": "cos(x)"
-            },
-            {
-                "question": "In the expression for the derivative of ln(x), what does it equal?",
-                "options": [
-                    "1/x",
-                    "ln(x)",
-                    "e^x",
-                    "x"
-                ],
-                "answer": "1/x"
+                "answer": "2"
             }
         ],
         "open_questions": [
             {
-                "question": "Explain the relationship between sin(θ) and cos(θ) in terms of their complementary angles.",
-                "answer": "sin(θ) = cos(90° - θ) and cos(θ) = sin(90° - θ); they are co-functions."
-            },
-            {
-                "question": "How does the identity tan²(θ) + 1 = sec²(θ) relate to the Pythagorean theorem?",
-                "answer": "This identity represents the relationship between the sides of a right triangle in the context of trigonometric functions, analogous to a² + b² = c²."
-            },
-            {
-                "question": "Describe the impact of integration by parts on solving integral expressions.",
-                "answer": "Integration by parts is a technique that transforms a complex integral into simpler parts, making it easier to evaluate, based on the product rule for differentiation."
+                "question": "מהי התוצאה של dimSp{T, T^2, T^3, T^{-1}}?",
+                "answer": "3"
             }
         ]
     }

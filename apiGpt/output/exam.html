@@ -1,5 +1,5 @@
 
-    <!DOCTYPE html>
+ <!DOCTYPE html>
     <html lang="he">
     <head>
         <meta charset="UTF-8">
@@ -12,27 +12,30 @@
                 direction: rtl;
                 margin: 0;
                 padding: 0;
-                background: linear-gradient(135deg, #89f7fe, #66a6ff);
-                color: #333;
+                background-color: #faf7fc;
+                color: #2c3e50;
             }
             .container {
-                max-width: 800px;
+                max-width: 900px;
                 margin: 40px auto;
-                background-color: #fff;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                padding: 40px;
+                background-color: #f6edf9;
+                border-radius: 16px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             }
             h1, h2 {
                 text-align: center;
-                color: #2c3e50;
+                margin-bottom: 30px;
+                color: #8c4ca8;
             }
             .question, .open-question {
-                margin-bottom: 25px;
-                padding: 20px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                border-left: 5px solid #2980b9;
+                color: #8c4ca8;
+                margin-bottom: 35px;
+                padding: 24px;
+                background-color: #F5F3F7;
+                border-radius: 12px;
+                border-right: 6px solid #4929B9;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             }
             .question p, .open-question p {
                 font-size: 18px;
@@ -40,30 +43,35 @@
             }
             .options p {
                 margin: 8px 0;
-                padding: 8px;
-                background-color: #ecf0f1;
-                border-radius: 4px;
+                padding: 10px 14px;
+                background-color: #FFFFFF;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+            }
+            .options p:hover {
+                background-color: #dce3e8;
             }
             .answer, .answer-text {
-                font-weight: bold;
-                color: #27ae60;
-                margin-top: 15px;
+                font-weight: 600;
+                color: #8c4ca8;
+                margin-top: 18px;
                 display: none;
             }
             .show-answer-btn {
                 margin-top: 15px;
-                padding: 8px 15px;
-                background-color: #2980b9;
+                padding: 10px 20px;
+                background-color: #4929B9;
                 color: #fff;
                 border: none;
-                border-radius: 4px;
+                border-radius: 8px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
             }
             .show-answer-btn:hover {
-                background-color: #3498db;
+                background-color: #8c4ca8;
             }
         </style>
+
         <script>
             function toggleAnswer(id) {
                 var answer = document.getElementById(id);
@@ -78,95 +86,20 @@
             <h2>שאלות רב-ברירה</h2>
         
             <div class="question">
-                <p>What is the result of (b ± a)(b + a)?</p>
+                <p>מהו ערך Re(T^{-1}(2 + i))?</p>
                 <div class="options">
-            <p>b² - 2ab</p><p>b² + a²</p><p>b² + 2ab</p><p>b² - a²</p>
+            <p>-3</p><p>1</p><p>2</p><p>4</p>
                 </div>
                 <button class="show-answer-btn" onclick="toggleAnswer('answer0')">הצג תשובה</button>
-                <p id="answer0" class="answer">תשובה נכונה: b² - a²</p>
-            </div>
-            
-            <div class="question">
-                <p>What function is expressed as x log(x)?</p>
-                <div class="options">
-            <p>Exponent</p><p>Trigonometric</p><p>Logarithm</p><p>Polynomial</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer1')">הצג תשובה</button>
-                <p id="answer1" class="answer">תשובה נכונה: Logarithm</p>
-            </div>
-            
-            <div class="question">
-                <p>Which operation is used in the formula: sin²(θ) + cos²(θ) = 1?</p>
-                <div class="options">
-            <p>Addition</p><p>Multiplication</p><p>Division</p><p>Subtraction</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer2')">הצג תשובה</button>
-                <p id="answer2" class="answer">תשובה נכונה: Addition</p>
-            </div>
-            
-            <div class="question">
-                <p>In the expression of def integration, what does ∫C e^x dx signify?</p>
-                <div class="options">
-            <p>Trigonometric integral</p><p>Antiderivative of exponential function</p><p>Logarithmic integration</p><p>Derivative of constant C</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer3')">הצג תשובה</button>
-                <p id="answer3" class="answer">תשובה נכונה: Antiderivative of exponential function</p>
-            </div>
-            
-            <div class="question">
-                <p>For the trigonometric identity, what does cos(θ - π) equal?</p>
-                <div class="options">
-            <p>sin(θ)</p><p>-sin(θ)</p><p>-cos(θ)</p><p>cos(θ)</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer4')">הצג תשובה</button>
-                <p id="answer4" class="answer">תשובה נכונה: -cos(θ)</p>
-            </div>
-            
-            <div class="question">
-                <p>What does the integral ∫x² dx produce?</p>
-                <div class="options">
-            <p>2x + C</p><p>x²/2 + C</p><p>ln(x) + C</p><p>x³/3 + C</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer5')">הצג תשובה</button>
-                <p id="answer5" class="answer">תשובה נכונה: x³/3 + C</p>
-            </div>
-            
-            <div class="question">
-                <p>What is the derivative of sin(x)?</p>
-                <div class="options">
-            <p>-cos(x)</p><p>cos(x)</p><p>tan(x)</p><p>sin(x)</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer6')">הצג תשובה</button>
-                <p id="answer6" class="answer">תשובה נכונה: cos(x)</p>
-            </div>
-            
-            <div class="question">
-                <p>In the expression for the derivative of ln(x), what does it equal?</p>
-                <div class="options">
-            <p>e^x</p><p>ln(x)</p><p>1/x</p><p>x</p>
-                </div>
-                <button class="show-answer-btn" onclick="toggleAnswer('answer7')">הצג תשובה</button>
-                <p id="answer7" class="answer">תשובה נכונה: 1/x</p>
+                <p id="answer0" class="answer">תשובה נכונה: 2</p>
             </div>
             
             <h2>שאלות פתוחות</h2>
         
             <div class="open-question">
-                <p>Explain the relationship between sin(θ) and cos(θ) in terms of their complementary angles.</p>
+                <p>מהי התוצאה של dimSp{T, T^2, T^3, T^{-1}}?</p>
                 <button class="show-answer-btn" onclick="toggleAnswer('open-answer0')">הצג תשובה</button>
-                <p id="open-answer0" class="answer-text">sin(θ) = cos(90° - θ) and cos(θ) = sin(90° - θ); they are co-functions.</p>
-            </div>
-            
-            <div class="open-question">
-                <p>How does the identity tan²(θ) + 1 = sec²(θ) relate to the Pythagorean theorem?</p>
-                <button class="show-answer-btn" onclick="toggleAnswer('open-answer1')">הצג תשובה</button>
-                <p id="open-answer1" class="answer-text">This identity represents the relationship between the sides of a right triangle in the context of trigonometric functions, analogous to a² + b² = c².</p>
-            </div>
-            
-            <div class="open-question">
-                <p>Describe the impact of integration by parts on solving integral expressions.</p>
-                <button class="show-answer-btn" onclick="toggleAnswer('open-answer2')">הצג תשובה</button>
-                <p id="open-answer2" class="answer-text">Integration by parts is a technique that transforms a complex integral into simpler parts, making it easier to evaluate, based on the product rule for differentiation.</p>
+                <p id="open-answer0" class="answer-text">3</p>
             </div>
             
         </div>
