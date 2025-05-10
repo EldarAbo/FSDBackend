@@ -22,7 +22,7 @@ class ContentController {
 
   async create(req, res) {
     try {
-      const { userId, content, title, contentType } = req.body;
+      const { userId, content, subject, title, contentType } = req.body;
       if (!userId || !content || !contentType) {
         return res.status(400).send("Missing required fields: userId, content, and contentType are required");
       }
@@ -36,6 +36,7 @@ class ContentController {
       const newContent = await this.model.create({ 
         userId, 
         content, 
+        subject,
         title: title || "Untitled", 
         contentType 
       });
@@ -83,6 +84,7 @@ class ContentController {
       throw new Error("Error fetching content by user ID");
     }
   }
+  
   
   async getContentByUserIdAndType(userId, contentType) {
     try {
