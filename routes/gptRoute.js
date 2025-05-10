@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import path from 'path';
 import * as fs from 'fs';
+import axios from 'axios'; // Add axios for making HTTP requests
 import { promises as fsPromises } from 'fs';
 import { fileURLToPath } from 'url';
 import { 
@@ -138,7 +139,41 @@ router.post('/upload-and-generate-summary', upload.single('file'), async (req, r
       additionalPrompt
     );
     
-    res.sendFile(htmlPath);
+    //res.sendFile(htmlPath);
+
+    try {
+      // Get userId from the request body or use default
+      const htmlContent = await fsPromises.readFile(htmlPath, 'utf8');
+      const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
+      const defaultTitle = `Summary - ${new Date().toLocaleDateString()}`;
+      const subject = req.body.subject || 'Generic Subject';
+      
+      // Create content by making a POST request to the content API
+      const contentData = {
+        userId: userId,
+        content: htmlContent, // Use the actual HTML content
+        subject: subject,
+        title: defaultTitle,
+        contentType: "Summary"
+      };
+      
+      // Make a POST request to the content API endpoint
+      // Assuming the API is running on the same server
+      const apiResponse = await axios.post('http://localhost:3000/content', contentData);
+      const contentId = apiResponse.data._id;
+
+      console.log("Successfully saved summery content:", apiResponse.data._id);
+      
+    // Return both the HTML content and the contentId
+    res.json({
+      html: htmlContent,
+      contentId: contentId
+    });
+    } catch (contentError) {
+      console.error('Error saving content to database:', contentError);
+
+    }
+
   } catch (error) {
     console.error('Error processing file and generating summary:', error);
     res.status(500).json({ error: 'Failed to generate summary', details: error.message });
@@ -199,8 +234,10 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
     // Extract the new parameters from request body
     const numAmerican = parseInt(req.body.numAmerican) || 8;  // Default to 8 if not provided
     const numOpen = parseInt(req.body.numOpen) || 3;          // Default to 3 if not provided
-    const additionalPrompt = req.body.prompt || '';  // Default to empty string if not provided
-    
+    let additionalPrompt = req.body.prompt || '';  // Default to empty string if not provided
+    const difficulty = req.body.difficulty || 'Moderate';     // Default to Moderate if not provided
+
+    additionalPrompt = additionalPrompt + '. Make it on a ' + difficulty + ' difficulty level.';
     // Process the file and generate the exam with the new parameters
     const htmlPath = await processPdfAndGenerateHtmlExam(
       filePath,
@@ -210,24 +247,40 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
       additionalPrompt
     );
     
-    res.sendFile(htmlPath);
+    //res.sendFile(htmlPath);
 
-    const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
-    const title = req.body.title || "Generated Eldar Exam"; // Default title if not provided
-    
-    // Create the content record
-    // const newContent = await contentController.create({ 
-    //   userId, 
-    //   content: htmlPath, // Use actual HTML content, not just the file path
-    //   title: title, 
-    //   contentType: "Exam" 
-    // });
-    
-    //console.log("Successfully saved exam content:", newContent._id);
-    // const userExams = await fetch('/content/user/67f3bd679937c252dacacee4/type/Exam', {
-    // }).then(res => res.json());
-    // console.log("user exames:",userExams);
+    try {
+      // Get userId from the request body or use default
+      const htmlContent = await fsPromises.readFile(htmlPath, 'utf8');
+      const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
+      const defaultTitle = `Exam - ${difficulty} - ${new Date().toLocaleDateString()}`;
+      const subject = req.body.subject || 'Generic Subject';
+      
+      // Create content by making a POST request to the content API
+      const contentData = {
+        userId: userId,
+        content: htmlContent, // Use the actual HTML content
+        subject: subject,
+        title: defaultTitle,
+        contentType: "Exam"
+      };
+      
+      // Make a POST request to the content API endpoint
+      // Assuming the API is running on the same server
+      const apiResponse = await axios.post('http://localhost:3000/content', contentData);
+      const contentId = apiResponse.data._id;
 
+      console.log("Successfully saved exam content:", apiResponse.data._id);
+      
+    // Return both the HTML content and the contentId
+    res.json({
+      html: htmlContent,
+      contentId: contentId
+    });
+    } catch (contentError) {
+      console.error('Error saving content to database:', contentError);
+
+    }
 
   } catch (error) {
     console.error('Error processing file and generating exam:', error);

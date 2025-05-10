@@ -10,9 +10,14 @@ const contentSchema = new mongoose.Schema({
     type: String,  // HTML content
     required: true
   },
+  subject: {
+    type: String,
+    required: true,
+    default: "Untitled Subject"
+  },
   title: {
     type: String,
-    default: "Untitled"
+    default: "Untitled Title"
   },
   contentType: {
     type: String,
