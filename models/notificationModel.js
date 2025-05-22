@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema({
   subjectId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject",
+    type: String,
     required: true,
   },
   day: {
