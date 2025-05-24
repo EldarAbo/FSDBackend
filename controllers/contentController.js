@@ -1,9 +1,22 @@
 import contentModel from "../models/contentModel.js";
+import subjectModel from "../models/subjectModel.js";
 import { promises as fsPromises } from 'fs';
+import mongoose from "mongoose";
 
 class ContentController {
   constructor() {
     this.model = contentModel;
+  }
+
+  async populateItem(item) {
+    if  (item.subject){
+      const fullSubject = await subjectModel.findOne({ _id: item.subject });
+      return {
+        ...item.toObject(),
+        subjectTitle: fullSubject.title,
+      };
+    }
+    else { return item }
   }
 
   async getById(req, res) {
@@ -11,7 +24,8 @@ class ContentController {
     try {
       const content = await this.model.findById(id);
       if (content) {
-        res.status(200).send(content);
+        const populatedItem = await this.populateItem(content);
+        res.status(200).send(populatedItem);
       } else {
         res.status(404).send("Content not found");
       }
@@ -51,11 +65,12 @@ class ContentController {
     const id = req.params.id;
     const body = req.body;
     try {
-      const updatedContent = await this.model.findByIdAndUpdate(id, body, { new: true });
+      const updatedContent = await this.model.findByIdAndUpdate(id, body, { new: true })
       if (!updatedContent) {
         res.status(404).send("Content not found");
-      } else {
-        res.status(200).send(updatedContent);
+      } else {      
+        const populatedItem = await this.populateItem(updatedContent);
+        res.status(200).send(populatedItem);
       }
     } catch (error) {
       res.status(400).send(error);
@@ -76,11 +91,18 @@ class ContentController {
     }
   }
 
-  async getContentByUserId(userId) {
+
+  async getContentByUserId(userId, subjectId) {
     try {
-      const contents = await this.model.find({ userId });
-      return contents;
+      const query = { userId };
+      if (subjectId) {
+        query.subject = subjectId
+      }
+      const contents = await this.model.find(query)
+      const populatedItems = await Promise.all(contents.map(this.populateItem));
+      return populatedItems;
     } catch (error) {
+      console.error("Error fetching content by user ID:", error);
       throw new Error("Error fetching content by user ID");
     }
   }
@@ -88,8 +110,9 @@ class ContentController {
   
   async getContentByUserIdAndType(userId, contentType) {
     try {
-      const contents = await this.model.find({ userId, contentType });
-      return contents;
+      const contents = await this.model.find({ userId, contentType })
+      const populatedItems = await Promise.all(contents.map(this.populateItem));
+      return populatedItems;
     } catch (error) {
       throw new Error(`Error fetching ${contentType} content by user ID`);
     }

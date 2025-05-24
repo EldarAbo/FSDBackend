@@ -12,8 +12,6 @@ const contentSchema = new mongoose.Schema({
   },
   subject: {
     type: String,
-    required: true,
-    default: "Untitled Subject"
   },
   title: {
     type: String,
