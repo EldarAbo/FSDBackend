@@ -143,6 +143,33 @@ router.get("/user/:userId/type/:contentType",  async (req, res) => {
 
 /**
  * @swagger
+ * /content/checked:
+ *   get:
+ *     summary: Get all checked content
+ *     tags: [Content]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of checked content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Content'
+ *       401:
+ *         description: Unauthorized
+ */
+router.get(
+  "/shared",
+  authController.authMiddleware,
+  contentController.getCheckedContent.bind(contentController)
+);
+
+
+/**
+ * @swagger
  * /content/{id}:
  *   get:
  *     summary: Get content by ID
