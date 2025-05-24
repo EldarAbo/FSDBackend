@@ -1,4 +1,5 @@
 import contentModel from "../models/contentModel.js";
+import userModel from "../models/userModel.js";
 import subjectModel from "../models/subjectModel.js";
 import { promises as fsPromises } from 'fs';
 import mongoose from "mongoose";
@@ -36,7 +37,7 @@ class ContentController {
 
   async create(req, res) {
     try {
-      const { userId, content, subject, title, contentType } = req.body;
+      const { userId, content, subject, title, contentType, copyContent, shared } = req.body;
       if (!userId || !content || !contentType) {
         return res.status(400).send("Missing required fields: userId, content, and contentType are required");
       }
@@ -52,7 +53,9 @@ class ContentController {
         content, 
         subject,
         title: title || "Untitled", 
-        contentType 
+        contentType,
+        shared,
+        copyContent 
       });
       
       res.status(201).send(newContent);
@@ -115,6 +118,27 @@ class ContentController {
       return populatedItems;
     } catch (error) {
       throw new Error(`Error fetching ${contentType} content by user ID`);
+    }
+  }
+
+  async getCheckedContent(req, res) {
+    try {
+      const checkedContent = await this.model.find({ shared: true });
+
+      const contentWithUser = await Promise.all(
+        checkedContent.map(async (content) => {
+          const user = await userModel.findById(content.userId).select("username fullName imgUrl"); 
+          return {
+            ...content.toObject(),
+            user,
+          };
+        })
+      );
+
+      res.status(200).json(contentWithUser);
+    } catch (error) {
+      console.error("Error fetching checked content:", error);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 }

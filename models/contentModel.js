@@ -22,6 +22,14 @@ const contentSchema = new mongoose.Schema({
     enum: ["Summary", "Exam"],
     required: true
   },
+  shared:{
+    type: Boolean,
+    default: false
+  },
+  copyContent:{
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now
