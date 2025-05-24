@@ -127,10 +127,13 @@ class ContentController {
 
       const contentWithUser = await Promise.all(
         checkedContent.map(async (content) => {
-          const user = await userModel.findById(content.userId).select("username fullName imgUrl"); 
+          const user = await userModel.findById(content.userId).select("username fullName imgUrl");
+          const fullSubject = await subjectModel.findOne({ _id: content.subject }); // <- fixed `item` to `content`
+
           return {
             ...content.toObject(),
             user,
+            ...(fullSubject && { subjectTitle: fullSubject.title }), // only add if found
           };
         })
       );
