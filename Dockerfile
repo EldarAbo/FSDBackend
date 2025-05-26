@@ -48,6 +48,7 @@ USER appuser
 
 # Activate virtual environment when running the app
 ENV PATH="/app/venv/bin:$PATH"
+ENV NODE_ENV=production
 
-EXPOSE 3000
+EXPOSE 443
 CMD ["npm", "start"]

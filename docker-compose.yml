@@ -4,11 +4,13 @@ services:
   backend:
     build: .
     ports:
-      - "3000:3000"
+      - "0.0.0.0:443:443"
     depends_on:
       - mongodb
     env_file:
-      - .env
+      - .env_prod
+    volumes:
+      - ./certs:/app/certs:ro
 
   mongodb:
     image: mongo:latest
