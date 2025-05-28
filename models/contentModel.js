@@ -12,6 +12,7 @@ const contentSchema = new mongoose.Schema({
   },
   subject: {
     type: String,
+    default: null
   },
   title: {
     type: String,
