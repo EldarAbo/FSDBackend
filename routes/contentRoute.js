@@ -38,6 +38,13 @@ import authController from "../controllers/authController.js";
  *           type: string
  *           enum: [Summary, Exam]
  *           description: Type of the content
+ *         deleted:
+ *           type: boolean
+ *           description: Soft delete flag
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Deletion timestamp
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -54,7 +61,7 @@ import authController from "../controllers/authController.js";
  * @swagger
  * /content/user/{userId}:
  *   get:
- *     summary: Get all content created by a specific user
+ *     summary: Get all active content created by a specific user
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
@@ -67,7 +74,7 @@ import authController from "../controllers/authController.js";
  *         description: The ID of the user
  *     responses:
  *       200:
- *         description: List of content created by the user
+ *         description: List of active content created by the user
  *         content:
  *           application/json:
  *             schema:
@@ -98,9 +105,34 @@ router.get("/user/:userId", async (req, res) => {
 
 /**
  * @swagger
+ * /content/user/{userId}/deleted:
+ *   get:
+ *     summary: Get all deleted content created by a specific user
+ *     tags: [Content]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user
+ *     responses:
+ *       200:
+ *         description: List of deleted content
+ *       400:
+ *         description: Invalid user ID
+ *       500:
+ *         description: Server error
+ */
+router.get("/user/:userId/deleted", authController.authMiddleware, contentController.getDeletedContent.bind(contentController));
+
+/**
+ * @swagger
  * /content/user/{userId}/type/{contentType}:
  *   get:
- *     summary: Get all content of a specific type created by a user
+ *     summary: Get all active content of a specific type created by a user
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
@@ -120,13 +152,13 @@ router.get("/user/:userId", async (req, res) => {
  *         description: The type of content
  *     responses:
  *       200:
- *         description: List of content of specified type
+ *         description: List of active content of specified type
  *       400:
  *         description: Invalid parameters
  *       500:
  *         description: Server error
  */
-router.get("/user/:userId/type/:contentType",  async (req, res) => {
+router.get("/user/:userId/type/:contentType", async (req, res) => {
   try {
     const { userId, contentType } = req.params;
     
@@ -147,15 +179,15 @@ router.get("/user/:userId/type/:contentType",  async (req, res) => {
 
 /**
  * @swagger
- * /content/checked:
+ * /content/shared:
  *   get:
- *     summary: Get all checked content
+ *     summary: Get all active shared content
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of checked content
+ *         description: A list of active shared content
  *         content:
  *           application/json:
  *             schema:
@@ -165,18 +197,13 @@ router.get("/user/:userId/type/:contentType",  async (req, res) => {
  *       401:
  *         description: Unauthorized
  */
-router.get(
-  "/shared",
-  authController.authMiddleware,
-  contentController.getCheckedContent.bind(contentController)
-);
-
+router.get("/shared", authController.authMiddleware, contentController.getCheckedContent.bind(contentController));
 
 /**
  * @swagger
  * /content/{id}:
  *   get:
- *     summary: Get content by ID
+ *     summary: Get active content by ID
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
@@ -235,7 +262,7 @@ router.post("/", contentController.create.bind(contentController));
  * @swagger
  * /content/{id}:
  *   put:
- *     summary: Update content
+ *     summary: Update active content
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
@@ -270,7 +297,7 @@ router.put("/:id", contentController.updateItem.bind(contentController));
  * @swagger
  * /content/{id}:
  *   delete:
- *     summary: Delete content
+ *     summary: Soft delete content
  *     tags: [Content]
  *     security:
  *       - bearerAuth: []
@@ -282,10 +309,54 @@ router.put("/:id", contentController.updateItem.bind(contentController));
  *           type: string
  *     responses:
  *       200:
- *         description: Deleted
+ *         description: Content soft deleted
  *       404:
  *         description: Content not found
  */
 router.delete("/:id", contentController.deleteItem.bind(contentController));
+
+/**
+ * @swagger
+ * /content/{id}/restore:
+ *   put:
+ *     summary: Restore soft-deleted content
+ *     tags: [Content]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Content restored
+ *       404:
+ *         description: Deleted content not found
+ */
+router.put("/:id/restore", authController.authMiddleware, contentController.restoreItem.bind(contentController));
+
+/**
+ * @swagger
+ * /content/{id}/permanent:
+ *   delete:
+ *     summary: Permanently delete content (admin only)
+ *     tags: [Content]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Content permanently deleted
+ *       404:
+ *         description: Content not found
+ */
+router.delete("/:id/permanent", authController.authMiddleware, contentController.permanentlyDeleteItem.bind(contentController));
 
 export default router;

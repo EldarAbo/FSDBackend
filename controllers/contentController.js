@@ -23,7 +23,8 @@ class ContentController {
   async getById(req, res) {
     const id = req.params.id;
     try {
-      const content = await this.model.findById(id);
+      // Only get non-deleted content
+      const content = await this.model.findOne({ _id: id, deleted: { $ne: true } });
       if (content) {
         const populatedItem = await this.populateItem(content);
         res.status(200).send(populatedItem);
@@ -47,7 +48,6 @@ class ContentController {
         return res.status(400).send("contentType must be either 'Summary' or 'Exam'");
       }
 
- 
       const newContent = await this.model.create({ 
         userId, 
         content, 
@@ -68,7 +68,12 @@ class ContentController {
     const id = req.params.id;
     const body = req.body;
     try {
-      const updatedContent = await this.model.findByIdAndUpdate(id, body, { new: true })
+      // Only update non-deleted content
+      const updatedContent = await this.model.findOneAndUpdate(
+        { _id: id, deleted: { $ne: true } }, 
+        body, 
+        { new: true }
+      );
       if (!updatedContent) {
         res.status(404).send("Content not found");
       } else {      
@@ -83,11 +88,58 @@ class ContentController {
   async deleteItem(req, res) {
     const id = req.params.id;
     try {
+      // Soft delete: set deleted flag to true and deletedAt timestamp
+      const deletedContent = await this.model.findOneAndUpdate(
+        { _id: id, deleted: { $ne: true } },
+        { 
+          deleted: true, 
+          deletedAt: new Date() 
+        },
+        { new: true }
+      );
+      
+      if (!deletedContent) {
+        res.status(404).send("Content not found");
+      } else {
+        res.status(200).send({ message: "Content deleted successfully", id: deletedContent._id });
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  // New method to permanently delete content (optional, for admin use)
+  async permanentlyDeleteItem(req, res) {
+    const id = req.params.id;
+    try {
       const deletedContent = await this.model.findByIdAndDelete(id);
       if (!deletedContent) {
         res.status(404).send("Content not found");
       } else {
-        res.status(200).send(deletedContent);
+        res.status(200).send({ message: "Content permanently deleted", id: deletedContent._id });
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  // New method to restore soft-deleted content
+  async restoreItem(req, res) {
+    const id = req.params.id;
+    try {
+      const restoredContent = await this.model.findOneAndUpdate(
+        { _id: id, deleted: true },
+        { 
+          deleted: false, 
+          deletedAt: null 
+        },
+        { new: true }
+      );
+      
+      if (!restoredContent) {
+        res.status(404).send("Deleted content not found");
+      } else {
+        res.status(200).send(restoredContent);
       }
     } catch (error) {
       res.status(400).send(error);
@@ -97,7 +149,7 @@ class ContentController {
 
   async getContentByUserId(userId, subjectId) {
     try {
-      const query = { userId };
+      const query = { userId, deleted: { $ne: true } };
       if (subjectId) {
         query.subject = subjectId
       }
@@ -110,10 +162,9 @@ class ContentController {
     }
   }
   
-  
   async getContentByUserIdAndType(userId, contentType) {
     try {
-      const contents = await this.model.find({ userId, contentType })
+      const contents = await this.model.find({ userId, contentType, deleted: { $ne: true } })
       const populatedItems = await Promise.all(contents.map(this.populateItem));
       return populatedItems;
     } catch (error) {
@@ -123,7 +174,11 @@ class ContentController {
 
   async getCheckedContent(req, res) {
     try {
-      const checkedContent = await this.model.find({ shared: true });
+      // Only return non-deleted shared content
+      const checkedContent = await this.model.find({ 
+        shared: true, 
+        deleted: { $ne: true } 
+      });
 
       const contentWithUser = await Promise.all(
         checkedContent.map(async (content) => {
@@ -141,6 +196,22 @@ class ContentController {
       res.status(200).json(contentWithUser);
     } catch (error) {
       console.error("Error fetching checked content:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  // New method to get deleted content (for admin or recovery purposes)
+  async getDeletedContent(req, res) {
+    try {
+      const { userId } = req.params;
+      const deletedContent = await this.model.find({ 
+        userId, 
+        deleted: true 
+      }).sort({ deletedAt: -1 });
+      
+      res.status(200).json(deletedContent);
+    } catch (error) {
+      console.error("Error fetching deleted content:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   }
