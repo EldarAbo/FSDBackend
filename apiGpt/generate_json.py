@@ -171,7 +171,7 @@ def generate_content(
     run = openai_client.beta.threads.runs.create(
         thread_id=thread_id,
         assistant_id=assistant_id,
-        max_completion_tokens=20000,
+        # max_completion_tokens=20000,
     )
 
     print("Processing...")

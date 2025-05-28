@@ -11,8 +11,8 @@ initApp().then((app) => {
     });
   } else {
     const props = { 
-      key: fs.readFileSync("./client-key.pem"), 
-      cert: fs.readFileSync("./client-cert.pem") 
+      key: fs.readFileSync("/app/certs/client-key.pem"), 
+      cert: fs.readFileSync("/app/certs/client-cert.pem") 
     };
     https.createServer(props, app).listen(port, () => {
       console.log(`Example app listening at https://localhost:${port}`);
