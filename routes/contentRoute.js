@@ -89,15 +89,19 @@ import authController from "../controllers/authController.js";
 router.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
+    const { subjectId } = req.query;
+
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).send("Invalid userId");
     }
-    const contents = await contentController.getContentByUserId(userId);
+
+    const contents = await contentController.getContentByUserId(userId, subjectId);
     res.status(200).send(contents);
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
+
 
 /**
  * @swagger

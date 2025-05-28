@@ -1,10 +1,23 @@
 import contentModel from "../models/contentModel.js";
 import userModel from "../models/userModel.js";
+import subjectModel from "../models/subjectModel.js";
 import { promises as fsPromises } from 'fs';
+import mongoose from "mongoose";
 
 class ContentController {
   constructor() {
     this.model = contentModel;
+  }
+
+  async populateItem(item) {
+    if  (item.subject){
+      const fullSubject = await subjectModel.findOne({ _id: item.subject });
+      return {
+        ...item.toObject(),
+        subjectTitle: fullSubject.title,
+      };
+    }
+    else { return item }
   }
 
   async getById(req, res) {
@@ -13,7 +26,8 @@ class ContentController {
       // Only get non-deleted content
       const content = await this.model.findOne({ _id: id, deleted: { $ne: true } });
       if (content) {
-        res.status(200).send(content);
+        const populatedItem = await this.populateItem(content);
+        res.status(200).send(populatedItem);
       } else {
         res.status(404).send("Content not found");
       }
@@ -62,8 +76,9 @@ class ContentController {
       );
       if (!updatedContent) {
         res.status(404).send("Content not found");
-      } else {
-        res.status(200).send(updatedContent);
+      } else {      
+        const populatedItem = await this.populateItem(updatedContent);
+        res.status(200).send(populatedItem);
       }
     } catch (error) {
       res.status(400).send(error);
@@ -131,25 +146,27 @@ class ContentController {
     }
   }
 
-  async getContentByUserId(userId) {
+
+  async getContentByUserId(userId, subjectId) {
     try {
-      // Only return non-deleted content
-      const contents = await this.model.find({ userId, deleted: { $ne: true } });
-      return contents;
+      const query = { userId, deleted: { $ne: true } };
+      if (subjectId) {
+        query.subject = subjectId
+      }
+      const contents = await this.model.find(query)
+      const populatedItems = await Promise.all(contents.map(this.populateItem));
+      return populatedItems;
     } catch (error) {
+      console.error("Error fetching content by user ID:", error);
       throw new Error("Error fetching content by user ID");
     }
   }
   
   async getContentByUserIdAndType(userId, contentType) {
     try {
-      // Only return non-deleted content
-      const contents = await this.model.find({ 
-        userId, 
-        contentType, 
-        deleted: { $ne: true } 
-      });
-      return contents;
+      const contents = await this.model.find({ userId, contentType, deleted: { $ne: true } })
+      const populatedItems = await Promise.all(contents.map(this.populateItem));
+      return populatedItems;
     } catch (error) {
       throw new Error(`Error fetching ${contentType} content by user ID`);
     }
@@ -165,10 +182,13 @@ class ContentController {
 
       const contentWithUser = await Promise.all(
         checkedContent.map(async (content) => {
-          const user = await userModel.findById(content.userId).select("username fullName imgUrl"); 
+          const user = await userModel.findById(content.userId).select("username fullName imgUrl");
+          const fullSubject = await subjectModel.findOne({ _id: content.subject }); // <- fixed `item` to `content`
+
           return {
             ...content.toObject(),
             user,
+            ...(fullSubject && { subjectTitle: fullSubject.title }), // only add if found
           };
         })
       );
