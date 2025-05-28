@@ -159,7 +159,7 @@ router.post('/upload-and-generate-summary', upload.single('file'), async (req, r
       
       // Make a POST request to the content API endpoint
       // Assuming the API is running on the same server
-      const apiResponse = await axios.post('http://localhost:3000/content', contentData);
+      const apiResponse = await axios.post(process.env.BASE_URL+'/content', contentData);
       const contentId = apiResponse.data._id;
 
       console.log("Successfully saved summery content:", apiResponse.data._id);
@@ -267,7 +267,7 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
       
       // Make a POST request to the content API endpoint
       // Assuming the API is running on the same server
-      const apiResponse = await axios.post('http://localhost:3000/content', contentData);
+      const apiResponse = await axios.post(process.env.BASE_URL+'/content', contentData);
       const contentId = apiResponse.data._id;
 
       console.log("Successfully saved exam content:", apiResponse.data._id);
