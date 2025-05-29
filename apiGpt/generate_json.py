@@ -82,7 +82,7 @@ def get_prompt(prompt_type, params=None):
         num_open = params.get("num_of_open", 3)
         additional = params.get("additional_prompt", "")
         
-        base_prompt = f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided."
+        base_prompt = f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided and. All text be written in Hebrew. Please make sure you read the content carefully and create questions that are relevant and meaningful. The questions should be clear, concise, and test the understanding of the material. The response must be in JSON format with the following structure:\n\n"
         
         # Add additional instructions if provided
         if additional:
@@ -110,22 +110,48 @@ def generate_content(
     openai_client = openai.OpenAI(api_key=api_key)
     
     # Create more detailed instructions based on generate_type
-    if generate_type == "summary":
-        instructions = """
-        You are an assistant that generates summaries as text input in JSON format.
-        The generated response must contain at least 500 words in JSON format.
-        Always return your response as valid JSON following the exact structure provided.
-        Do not include any explanations, code blocks, or formatting outside the JSON.
-        The JSON should be directly parseable by Python's json.loads() function.
-        Replace each subject title with an appropriate title based on the content in its section.
-        """
-    else:  # test
-        instructions = """
-        You are an assistant that generates tests based on text input in JSON format.
-        Always return your response as valid JSON following the exact structure provided.
-        Do not include any explanations, code blocks, or formatting outside the JSON.
-        The JSON should be directly parseable by Python's json.loads() function.
-        """
+    instructions = instructions = """
+    You are an expert academic assistant specializing in generating high-quality educational content in Hebrew. 
+
+    For TEST GENERATION:
+    - Create {num_american} multiple-choice questions (4 options each, one correct answer)
+    - Create {num_open} open-ended questions
+    - All questions MUST be directly based on the provided content
+    - Ensure questions test comprehension, analysis, and application of the material
+    - Format all questions clearly in Hebrew with proper grammar and syntax
+    - Return ONLY valid JSON following the exact structure provided
+
+    For SUMMARY GENERATION:
+    - Create a comprehensive summary covering all key concepts
+    - Organize content logically with clear section headings
+    - The summary should be at least 20% the length of the original text
+    - Include important definitions, theories, and examples
+    - Use academic Hebrew with proper terminology
+    - Return ONLY valid JSON following the exact structure provided
+
+    GENERAL REQUIREMENTS:
+    - All output must be in proper Hebrew (right-to-left text, no reversed characters)
+    - Never add explanatory text outside the JSON structure
+    - Maintain academic rigor and accuracy
+    - Adapt complexity to match the input material level
+    
+     EXAMPLE OF CORRECT HEBREW IN JSON:
+        {{
+            "question": "\\\\u202Eמהו הנושא הראשי?\\\\u202C",
+            "options": [
+                "\\\\u202Eתשובה א\\\\u202C",
+                "\\\\u202Eתשובה ב\\\\u202C"
+            ]
+        }}
+    
+    CRITICAL HEBREW TEXT RULES:
+        1. ALL Hebrew text must maintain proper left-to-right display
+        2. Never reverse Hebrew character order
+        3. Use Unicode explicit direction marks when needed:
+        - \u202B (RTL start) 
+        - \u202C (RTL end)
+        4. Test all Hebrew output for proper display
+    """
 
     # Step 2: Create an Assistant
     assistant = openai_client.beta.assistants.create(
@@ -145,17 +171,38 @@ def generate_content(
 
     # Format the content to emphasize JSON requirements
     content = f"""
-    {initial_prompt}
-    
-    Input content for {generate_type}:
-    {text_input}
-    
-    Return your response in valid JSON format according to this structure:
-    {json.dumps(response_structure, indent=2)}
-    
-    VERY IMPORTANT: Your entire response must be valid, parseable JSON only. 
-    Do not include any explanatory text, markdown formatting, or code blocks around the JSON.
-    """
+        {initial_prompt}
+
+        SOURCE MATERIAL:
+        {text_input}
+
+        SPECIFIC INSTRUCTIONS:
+        1. Analyze the content thoroughly before generating output
+        2. For tests: Ensure questions cover all key topics proportionally
+        3. For summaries: Include all major concepts with supporting details
+        4. Use academic Hebrew throughout - no slang or informal language
+        5. Format lists and bullet points clearly where appropriate
+        6. Double-check that all Hebrew text displays correctly
+
+        OUTPUT REQUIREMENTS:
+        - Strictly follow this JSON structure:
+        {response_structure}
+        - The JSON must be valid and parseable
+        - No additional text outside the JSON structure
+        - All Hebrew text must be properly formatted
+        
+        HEBREW TEXT REQUIREMENTS:
+            1. Add Unicode direction marks: \u202B before Hebrew text, \u202C after
+            2. Example: \u202Bטקסט בעברית\u202C
+            3. Verify no letters are reversed in the output
+            4. If using JSON: escape direction marks properly
+
+        IMPORTANT NOTES:
+        - Pay special attention to proper Hebrew diacritics (nikud) when relevant
+        - Maintain consistent terminology throughout
+        - For tests: Avoid trivial questions - focus on meaningful assessment
+        - For summaries: Include conceptual relationships between ideas
+        """
     print(content)
 
     # Step 5: Send a Message with Text Input
@@ -212,7 +259,17 @@ def generate_content(
     print(response_text)
 
     # Step 9: Parse the JSON response with enhanced error handling
-    parsed_json = extract_and_parse_json(response_text, generate_type)
+       # Step 9: Save Response to JSON File
+    cleaned_text = (
+        response_text.replace("```json\n", "").replace("\n```", "").replace("\n", "")
+    )
+    
+    debug_file = os.path.join(script_dir, "debug_response.txt")
+    with open(debug_file, "w", encoding="utf-8") as f:
+        f.write(cleaned_text)
+
+    # Parse the cleaned text as a JSON string
+    parsed_json = json.loads(cleaned_text)
 
     output_dir = os.path.join(script_dir, "output")
     if not os.path.exists(output_dir):
@@ -220,327 +277,11 @@ def generate_content(
 
     output_file = os.path.join(output_dir, "response.json")
     with open(output_file, "w", encoding="utf-8") as json_file:
-        json.dump(parsed_json, json_file, indent=4, ensure_ascii=False)
+        json.dump(parsed_json, json_file)
 
     print(f"Response saved to {output_file}")
 
     return 0
-
-def extract_and_parse_json(text, generate_type):
-    """
-    Enhanced function to extract and parse JSON from various formats.
-    Uses multiple strategies to find valid JSON within text.
-    
-    Args:
-        text (str): The text containing JSON
-        generate_type (str): Type of generation ('test' or 'summary')
-        
-    Returns:
-        dict: Parsed JSON or fallback structure
-    """
-    # Save original response for debugging
-    debug_file = os.path.join(script_dir, "debug_response.txt")
-    with open(debug_file, "w", encoding="utf-8") as f:
-        f.write(text)
-    
-    # Try to directly parse the entire text first
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    
-    # Strategy 1: Look for code blocks with JSON (```json ... ```)
-    json_blocks = re.findall(r'```(?:json)?\s*([\s\S]*?)\s*```', text)
-    
-    # Try each extracted block
-    for block in json_blocks:
-        try:
-            # Handle potential Unicode issues and escape sequences
-            block = block.encode('utf-8').decode('unicode_escape')
-            return json.loads(block)
-        except json.JSONDecodeError:
-            continue
-    
-    # Strategy 2: Look for complete JSON objects (starting with { and ending with })
-    # Make this more precise by finding the largest valid JSON object
-    possible_json = re.findall(r'(\{[\s\S]*\})', text)
-    possible_json.sort(key=len, reverse=True)  # Try longest matches first
-    
-    for json_str in possible_json:
-        try:
-            return json.loads(json_str)
-        except json.JSONDecodeError:
-            # Try cleaning the string
-            try:
-                # Remove any markdown formatting or non-JSON content
-                cleaned = re.sub(r'[^\{\}\[\]\,\:\"\'0-9a-zA-Z_\s\.\-]', '', json_str)
-                return json.loads(cleaned)
-            except json.JSONDecodeError:
-                continue
-    
-    # If we still have no valid JSON, try to build a structure from the text content
-    if generate_type == "test":
-        questions = []
-        # Look for sections that might be questions
-        question_blocks = re.split(r'\n\s*\d+[\.\)]\s*', text)
-        
-        for block in question_blocks:
-            if len(block.strip()) < 30:  # Skip short blocks
-                continue
-                
-            # Try to extract question and options
-            lines = block.strip().split('\n')
-            if not lines:
-                continue
-                
-            question_text = lines[0].strip()
-            options = []
-            
-            for line in lines[1:]:
-                if re.match(r'^[A-D][\.\)]', line.strip()):
-                    options.append(line.strip()[2:].strip())
-            
-            if question_text and options:
-                questions.append({
-                    "question": question_text,
-                    "type": "american",
-                    "answers": options,
-                    "correct_answer": options[0] if options else ""
-                })
-            elif question_text:
-                questions.append({
-                    "question": question_text,
-                    "type": "open"
-                })
-        
-        if questions:
-            return {
-                "title": "Extracted Test",
-                "description": "Test questions extracted from text",
-                "questions": questions
-            }
-    
-    # Create a fallback structure as last resort
-    return create_fallback_json(generate_type)
-
-
-def fix_json_quotes(text):
-    """
-    Fixes mismatched or incorrect quotes in JSON strings
-    """
-    # Replace single quotes with double quotes (except those in strings)
-    in_string = False
-    in_single_quote_string = False
-    result = []
-    
-    i = 0
-    while i < len(text):
-        char = text[i]
-        
-        # Check for escaped characters
-        if char == '\\' and i + 1 < len(text):
-            result.append(char)
-            i += 1
-            result.append(text[i])
-            i += 1
-            continue
-            
-        # Track string state
-        if char == '"' and not in_single_quote_string:
-            in_string = not in_string
-            result.append(char)
-        elif char == "'" and not in_string:
-            in_single_quote_string = not in_single_quote_string
-            result.append('"')  # Replace with double quote
-        elif char == "'" and in_string:
-            result.append("\\'")  # Escape single quote in double quote string
-        else:
-            result.append(char)
-        
-        i += 1
-    
-    return ''.join(result)
-
-def fix_json_string(text):
-    """
-    Comprehensive JSON string fixing
-    """
-    # Step 1: Replace single quotes with double quotes outside of strings
-    text = fix_json_quotes(text)
-    
-    # Step 2: Fix unquoted keys
-    text = re.sub(r'(\{|\,)\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1"\2":', text)
-    
-    # Step 3: Fix trailing commas
-    text = re.sub(r',\s*(\}|\])', r'\1', text)
-    
-    # Step 4: Fix missing commas between objects
-    text = re.sub(r'(\}|\])\s*(\{|\[)', r'\1,\2', text)
-    
-    # Step 5: Fix unquoted boolean values
-    text = re.sub(r':\s*(true|false)\s*([,\}])', r':"\\1"\2', text)
-    
-    # Step 6: Fix empty values
-    text = re.sub(r':\s*,', r':null,', text)
-    
-    return text
-
-
-def extract_questions_from_text(text):
-    """
-    Advanced extraction of test questions from text when JSON parsing fails
-    
-    Args:
-        text (str): Text containing questions
-        
-    Returns:
-        list: List of question dictionaries or None
-    """
-    questions = []
-    
-    # Pattern 1: Look for numbered questions (1., 2., etc.)
-    numbered_pattern = r'(?:^|\n)(?:\d+[\.\)]\s*)(.*?)(?=(?:\n\d+[\.\)]\s*)|$)'
-    numbered_questions = re.findall(numbered_pattern, text, re.DOTALL)
-    
-    # Pattern 2: Look for questions marked with Q:
-    q_pattern = r'(?:^|\n)(?:Q|Question)(?:\s*\d*)?[\.\:\)]\s*(.*?)(?=(?:\n(?:Q|Question)(?:\s*\d*)?[\.\:\)]\s*)|$)'
-    q_questions = re.findall(q_pattern, text, re.DOTALL)
-    
-    # Use whichever pattern found more questions
-    question_blocks = numbered_questions if len(numbered_questions) >= len(q_questions) else q_questions
-    
-    # If still no questions found, try to split by double newlines
-    if not question_blocks:
-        split_blocks = re.split(r'\n\s*\n', text)
-        question_blocks = [block for block in split_blocks if len(block.strip()) > 30]  # Filter short blocks
-    
-    for block in question_blocks:
-        if not block.strip():
-            continue
-        
-        # Try to identify options for multiple choice
-        option_patterns = [
-            r'(?:^|\n)(?:[A-D][\.\)]\s*)(.*?)(?=(?:\n[A-D][\.\)]\s*)|$)',  # A., B., etc.
-            r'(?:^|\n)(?:\([A-D]\)\s*)(.*?)(?=(?:\n\([A-D]\)\s*)|$)',      # (A), (B), etc.
-            r'(?:^|\n)(?:Option [A-D][\.\:]\s*)(.*?)(?=(?:\n(?:Option [A-D][\.\:]\s*))|$)'  # Option A:, etc.
-        ]
-        
-        options = []
-        for pattern in option_patterns:
-            found_options = re.findall(pattern, block, re.DOTALL)
-            if len(found_options) >= 2:  # Found multiple choice options
-                options = found_options
-                break
-        
-        if options and len(options) >= 2:  # At least 2 options to be a valid multiple choice
-            # This is a multiple choice question
-            # Extract the question text (everything before the first option)
-            option_start = block.find(options[0])
-            question_text = block[:option_start].strip() if option_start > 0 else block.split('\n')[0].strip()
-            
-            # Clean up answers
-            answers = [opt.strip() for opt in options]
-            
-            # Try to find correct answer indication
-            correct_index = None
-            correct_markers = [r'\*', r'\(correct\)', r'correct answer', r'answer:']
-            
-            for i, opt in enumerate(answers):
-                if any(re.search(marker, opt.lower()) for marker in correct_markers):
-                    correct_index = i
-                    # Clean the marker from the answer
-                    for marker in correct_markers:
-                        answers[i] = re.sub(marker, '', opt, flags=re.IGNORECASE).strip()
-            
-            correct_answer = answers[correct_index] if correct_index is not None else answers[0]
-            
-            questions.append({
-                "question": question_text,
-                "type": "american",
-                "answers": answers,
-                "correct_answer": correct_answer
-            })
-        else:
-            # This is likely an open question
-            questions.append({
-                "question": block.strip(),
-                "type": "open"
-            })
-    
-    return questions if questions else None
-
-def extract_summary_from_text(text):
-    """
-    Advanced extraction of summary content when JSON parsing fails
-    
-    Args:
-        text (str): Text containing summary
-        
-    Returns:
-        str: Extracted summary or None
-    """
-    # Remove code blocks and their contents
-    cleaned_text = re.sub(r'```.*?```', '', text, flags=re.DOTALL)
-    
-    # Try to find a structure that looks like a summary
-    summary_sections = [
-        re.search(r'Summary:(.*?)(?:\n\n|\n#|\Z)', cleaned_text, re.DOTALL),
-        re.search(r'Overview:(.*?)(?:\n\n|\n#|\Z)', cleaned_text, re.DOTALL),
-        re.search(r'Main Points:(.*?)(?:\n\n|\n#|\Z)', cleaned_text, re.DOTALL)
-    ]
-    
-    for section in summary_sections:
-        if section and len(section.group(1).strip()) > 100:
-            return section.group(1).strip()
-    
-    # If no structured summary found, remove instruction-like lines
-    lines = cleaned_text.split('\n')
-    content_lines = []
-    
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        # Skip lines that look like instructions
-        if any(phrase in line.lower() for phrase in [
-            'json format', 'here is', 'as requested', 'generated summary',
-            'below is', 'i have generated', 'please find'
-        ]):
-            continue
-        content_lines.append(line)
-    
-    # Join and return the remaining text
-    summary = '\n'.join(content_lines)
-    
-    # If still too short, return None
-    if len(summary) < 150:  # Increased threshold
-        return None
-        
-    return summary
-
-# Add a utility function to create a fallback JSON structure
-def create_fallback_json(generate_type):
-    """Creates a basic fallback JSON when parsing fails"""
-    import re
-    
-    if generate_type == "summary":
-        return {
-            "summary": "Error processing document. Please try again with a different document.",
-            "subjects": ["Error processing document"]
-        }
-    else:  # test
-        return {
-            "title": "Error processing document",
-            "description": "Could not generate test questions. Please try again.",
-            "questions": [
-                {
-                    "question": "Error processing document",
-                    "type": "american",
-                    "answers": ["Option A", "Option B", "Option C", "Option D"],
-                    "correct_answer": "Option A"
-                }
-            ]
-        }
 
 def parse_arguments():
     """Parse command-line arguments."""
@@ -618,6 +359,10 @@ if __name__ == "__main__":
         print("Error: Unsupported file type.")
         sys.exit(1)
 
+    input_debug_file = os.path.join(script_dir, "input_debug.txt")
+    with open(input_debug_file, "w", encoding="utf-8") as f:
+        f.write(total_input)
+    
     # Generate content
     result = generate_content(
         generate_type=generate_type,
