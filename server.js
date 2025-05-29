@@ -13,6 +13,8 @@ import passport from 'passport';
 import gptRoutes from "./routes/gptRoute.js"; 
 import subjectRoutes from "./routes/subjectRoute.js";
 import contentRoutes from "./routes/contentRoute.js";
+import "./scheduler/notificationScheduler.js";
+import notificationRoutes from "./routes/notificationRoute.js";
 
 
 const app = express();
@@ -45,6 +47,7 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 //app.use("/storage", fileRoute);
 app.use("/users", usersRoute);
+app.use("/notifications", notificationRoutes);
 app.use("/gpt", gptRoutes); // Add the GPT routes
 app.use("/subjects", subjectRoutes);
 app.use("/content", contentRoutes);
