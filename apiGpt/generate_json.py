@@ -266,7 +266,8 @@ def generate_content(
     run = openai_client.beta.threads.runs.create(
         thread_id=thread_id,
         assistant_id=assistant_id,
-        # max_completion_tokens=20000,
+        temperature=0.0,  # Adjust temperature for more deterministic output
+        max_completion_tokens=30000,
     )
 
     print("Processing...")
@@ -400,7 +401,7 @@ if __name__ == "__main__":
 
     # Extract text from the input file
     if file_type == "pdf":
-        total_input = compress_pdf_to_text(input_file)
+        total_input = compress_pdf_to_text(input_file)[:25000]
   #  elif file_type == "pptx":
   #      total_input = extract_text_from_pptx(input_file)
     else:
