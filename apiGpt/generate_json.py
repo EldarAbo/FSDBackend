@@ -8,6 +8,8 @@ import sys
 import os
 import re
 import sys
+from collections import Counter, defaultdict
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 #from pptx import Presentation
@@ -34,36 +36,81 @@ def read_api_key(file_path = os.path.join(script_dir, 'api_key.txt')):
     
 #     return "\n".join(text)
 
-def compress_pdf_to_text(input_pdf_path):
-    # Ensure the path is absolute
+import os
+import fitz  # PyMuPDF
+from collections import Counter, defaultdict
+
+def compress_pdf_to_text(input_pdf_path, skip_header_footer=True, merge_lines=True):
+    """
+    Extracts and cleans text from a PDF, optimized for structured Hebrew content.
+    - skip_header_footer: detect and remove repeated headers/footers across pages
+    - merge_lines: merge lines that are broken mid-sentence
+    """
+    # Ensure absolute path
     if not os.path.isabs(input_pdf_path):
         input_pdf_path = os.path.abspath(input_pdf_path)
-    
-    print(f"Opening PDF file: {input_pdf_path}")
-    
-    # Check if file exists
     if not os.path.exists(input_pdf_path):
         raise FileNotFoundError(f"PDF file not found: {input_pdf_path}")
-    
-    # Open the input PDF
+
     doc = fitz.open(input_pdf_path)
-    full_text = ""
+    pages_text = []
+    header_candidates = []
+    footer_candidates = []
 
-    # Iterate through each page and apply optimizations
-    for page_num in range(doc.page_count):
-        page = doc.load_page(page_num)
+    # First pass: collect first and last lines as header/footer candidates
+    for page in doc:
+        blocks = page.get_text("blocks")
+        blocks.sort(key=lambda b: (round(b[1]), round(b[0])))
+        lines = [b[4].strip() for b in blocks if b[4].strip()]
+        if lines:
+            header_candidates.append(lines[0])
+            footer_candidates.append(lines[-1])
 
-        # Compress images and other content
-        # Remove all annotations on the page
-        for annot in page.annots():
-            page.delete_annot(annot)
-        # page.set_(None)  # Remove annotations to save space
-        page.clean_contents()  # Clean up page contents
+    # Determine repeated headers/footers
+    header_counts = Counter(header_candidates)
+    footer_counts = Counter(footer_candidates)
+    common_header = header_counts.most_common(1)[0][0] if header_counts else None
+    common_footer = footer_counts.most_common(1)[0][0] if footer_counts else None
 
-        # Extract text from the page and append it to the string
-        full_text += page.get_text("text")  # Extract text as plain text
+    # Second pass: extract and clean text
+    for page in doc:
+        blocks = page.get_text("blocks")
+        blocks.sort(key=lambda b: (round(b[1]), round(b[0])))
+        page_lines = []
+        for b in blocks:
+            text = b[4].strip()
+            if not text:
+                continue
+            if skip_header_footer:
+                if text == common_header or text == common_footer:
+                    continue
+            page_lines.append(text)
 
-    return full_text
+        # Optionally merge lines that don't end with punctuation
+        if merge_lines:
+            merged = []
+            buffer = ""
+            for line in page_lines:
+                if buffer:
+                    # if previous line seems incomplete
+                    if not buffer[-1] in '.?!:;"' and not buffer.endswith('"'):
+                        buffer += ' ' + line
+                        continue
+                    else:
+                        merged.append(buffer)
+                        buffer = line
+                else:
+                    buffer = line
+            if buffer:
+                merged.append(buffer)
+            page_lines = merged
+
+        pages_text.extend(page_lines)
+
+    doc.close()
+    # Join pages with blank line for separation
+    return "\n".join(pages_text)
+
 
 # Define the missing get_prompt function
 def get_prompt(prompt_type, params=None):
@@ -82,8 +129,7 @@ def get_prompt(prompt_type, params=None):
         num_open = params.get("num_of_open", 3)
         additional = params.get("additional_prompt", "")
         
-        base_prompt = f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided and. All text be written in Hebrew. Please make sure you read the content carefully and create questions that are relevant and meaningful. The questions should be clear, concise, and test the understanding of the material. The response must be in JSON format with the following structure:\n\n"
-        
+        base_prompt = f"Generate a test with {num_american} multiple choice questions and {num_open} open questions based on the following content only. Each question should directly relate to the main topics in the provided content. Each multiple choice question should have 4 options, with exactly one correct answer. Do not use generic or placeholder questions - all questions must be specifically about the content provided and. All text be written in Hebrew. Please make sure you read the content carefully and create questions that are relevant and meaningful. The questions should be clear, concise, and test the understanding of the material. The response must be in JSON format with the following structure:\n\n"      
         # Add additional instructions if provided
         if additional:
             base_prompt = f"{base_prompt} {additional}"
@@ -145,7 +191,7 @@ def generate_content(
         }}
     
     CRITICAL HEBREW TEXT RULES:
-        1. ALL Hebrew text must maintain proper left-to-right display
+        1. ALL Hebrew text must maintain proper right-to-left display
         2. Never reverse Hebrew character order
         3. Use Unicode explicit direction marks when needed:
         - \u202B (RTL start) 
@@ -157,7 +203,7 @@ def generate_content(
     assistant = openai_client.beta.assistants.create(
         name="Test/Summary Generator",
         instructions=instructions,
-        model="gpt-4o",
+        model="gpt-4.1",  # Use the latest model
     )
     assistant_id = assistant.id
 
@@ -218,7 +264,7 @@ def generate_content(
     run = openai_client.beta.threads.runs.create(
         thread_id=thread_id,
         assistant_id=assistant_id,
-        max_completion_tokens=20000,
+        # max_completion_tokens=20000,
     )
 
     print("Processing...")
