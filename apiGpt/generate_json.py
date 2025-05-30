@@ -197,6 +197,8 @@ def generate_content(
         - \u202B (RTL start) 
         - \u202C (RTL end)
         4. Test all Hebrew output for proper display
+    
+    Do not return json values with one Quotation mark, always use double quotes.
     """
 
     # Step 2: Create an Assistant
