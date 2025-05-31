@@ -63,7 +63,7 @@ def generate_html(data):
     # Rest of the function continues as before...
     html_content = """
  <!DOCTYPE html>
-    <html lang="he">
+    <html lang="he" dir="rtl">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
