@@ -197,6 +197,10 @@ def generate_content(
         - \u202B (RTL start) 
         - \u202C (RTL end)
         4. Test all Hebrew output for proper display
+        
+    Notes for mathematical content:
+    - Use LaTeX formatting for equations
+    - Ensure all mathematical symbols are correctly displayed in Hebrew context
     
     Do not return json values with one Quotation mark, always use double quotes.
     """
