@@ -60,12 +60,61 @@ class SubjectController {
 
   async getSubjectsByUserId(userId) {
     try {
-      const subjects = await this.model.find({userId: userId }).populate("resultsId");
-      return subjects;
+      const subjects = await this.model.find({ userId });
+
+      if (!subjects || subjects.length === 0) {
+        return []; // מחזיר מערך ריק אם אין נושאים
+      }
+
+      const enrichedSubjects = await Promise.all(
+        subjects.map(async (subject) => {
+          let tests = 0;
+          let summaries = 0;
+
+          try {
+            const contentCounts = await ContentModel.aggregate([
+              {
+                $match: {
+                  userId,
+                  subject: subject._id.toString(),
+                  deleted: false,
+                },
+              },
+              {
+                $group: {
+                  _id: "$contentType",
+                  count: { $sum: 1 },
+                },
+              },
+            ]);
+
+            for (const c of contentCounts) {
+              if (c._id === "Exam") tests = c.count;
+              else if (c._id === "Summary") summaries = c.count;
+            }
+          } catch (err) {
+            // במקרה של שגיאה באגרגציה, ממשיכים עם 0 ו-0
+          }
+
+          return {
+            _id: subject._id,
+            title: subject.title,
+            description: subject.description,
+            userId: subject.userId,
+            tests: tests,
+            summaries: summaries,
+          };
+        })
+      );
+
+      return enrichedSubjects;
     } catch (error) {
-      throw new Error("Error fetching subjects by user ID");
+      console.error("Error in getSubjectsByUserId:", error);
+      throw new Error("Error fetching subjects with test/summary counts");
     }
-  }
+}
+
+
 }
 
 const subjectController = new SubjectController();

@@ -22,6 +22,7 @@ import authController from "../controllers/authController.js";
  */
 
 /**
+ /**
  * @swagger
  * /subjects/user/{userId}:
  *   get:
@@ -36,18 +37,36 @@ import authController from "../controllers/authController.js";
  *         description: The ID of the user
  *     responses:
  *       200:
- *         description: List of subjects created by the user
+ *         description: List of subjects created by the user (can be empty)
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Subject'
- *       404:
- *         description: User not found
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: Subject ID
+ *                   title:
+ *                     type: string
+ *                     description: Subject title
+ *                   description:
+ *                     type: string
+ *                     description: Subject description
+ *                   userId:
+ *                     type: string
+ *                     description: User ID that owns the subject
+ *                   tests:
+ *                     type: integer
+ *                     description: Number of tests in this subject
+ *                   summarys:
+ *                     type: integer
+ *                     description: Number of summaries in this subject
  *       500:
  *         description: Server error
  */
+
 router.get("/user/:userId", authController.authMiddleware, async (req, res) => {
   try {
     const { userId } = req.params;
