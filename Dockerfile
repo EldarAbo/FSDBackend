@@ -10,7 +10,11 @@ RUN apt-get update && \
     libglib2.0-0 \
     libsm6 \
     libxrender1 \
-    libxext6 && \
+    libxext6 \
+    tzdata && \
+    ln -snf /usr/share/zoneinfo/Asia/Jerusalem /etc/localtime && \
+    echo "Asia/Jerusalem" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata && \
     rm -rf /var/lib/apt/lists/*
 
 # Create and switch to non-root user
