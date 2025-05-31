@@ -170,7 +170,7 @@ def generate_content(
     For SUMMARY GENERATION:
     - Create a comprehensive summary covering all key concepts
     - Organize content logically with clear section headings
-    - The summary should be at least 20% the length of the original text
+    - The summary should be very very long and detailed
     - Include important definitions, theories, and examples
     - Use academic Hebrew with proper terminology
     - Return ONLY valid JSON following the exact structure provided
