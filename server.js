@@ -15,6 +15,8 @@ import subjectRoutes from "./routes/subjectRoute.js";
 import contentRoutes from "./routes/contentRoute.js";
 import "./scheduler/notificationScheduler.js";
 import notificationRoutes from "./routes/notificationRoute.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 
 const app = express();
@@ -52,7 +54,18 @@ app.use("/gpt", gptRoutes); // Add the GPT routes
 app.use("/subjects", subjectRoutes);
 app.use("/content", contentRoutes);
 //app.use("/storage", express.static("storage"));
-app.use(express.static("front"));
+// אחרי ה-middleware הבסיסי ולפני הראוטים
+app.use(express.static("front")); // שרת קבצים סטטיים מתיקיית front
+
+if (process.env.NODE_ENV === "production") {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    // הוסף לפני כל הראוטים האחרים
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'front', 'index.html'));
+});
+}
 const options = {
     definition: {
       openapi: "3.0.0",
