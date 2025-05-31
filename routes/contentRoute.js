@@ -86,7 +86,7 @@ import authController from "../controllers/authController.js";
  *       500:
  *         description: Server error
  */
-router.get("/user/:userId", async (req, res) => {
+router.get("/user/:userId", authController.authMiddleware , async (req, res) => {
   try {
     const { userId } = req.params;
     const { subjectId } = req.query;
@@ -158,7 +158,7 @@ router.get("/user/:userId/deleted", authController.authMiddleware, contentContro
  *       500:
  *         description: Server error
  */
-router.get("/user/:userId/type/:contentType", async (req, res) => {
+router.get("/user/:userId/type/:contentType", authController.authMiddleware , async (req, res) => {
   try {
     const { userId, contentType } = req.params;
     
@@ -291,7 +291,7 @@ router.post("/", contentController.create.bind(contentController));
  *       404:
  *         description: Content not found
  */
-router.put("/:id", contentController.updateItem.bind(contentController));
+router.put("/:id", authController.authMiddleware , contentController.updateItem.bind(contentController));
 
 /**
  * @swagger
@@ -313,7 +313,7 @@ router.put("/:id", contentController.updateItem.bind(contentController));
  *       404:
  *         description: Content not found
  */
-router.delete("/:id", contentController.deleteItem.bind(contentController));
+router.delete("/:id", authController.authMiddleware, contentController.deleteItem.bind(contentController));
 
 /**
  * @swagger
