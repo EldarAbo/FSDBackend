@@ -2,3 +2,4 @@ node_modules
 api_key.txt
 front
 *.pem
+token.json
