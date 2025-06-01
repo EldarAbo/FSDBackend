@@ -145,7 +145,7 @@ router.post('/upload-and-generate-summary', upload.single('file'), async (req, r
       // Get userId from the request body or use default
       const htmlContent = await fsPromises.readFile(htmlPath, 'utf8');
       const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
-      const defaultTitle = `Summary - ${new Date().toLocaleDateString()}`;
+      const defaultTitle = `Summary - ${new Date().toLocaleString()}`;
       const subject = req.body.subject;
       
       // Create content by making a POST request to the content API
@@ -253,7 +253,7 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
       // Get userId from the request body or use default
       const htmlContent = await fsPromises.readFile(htmlPath, 'utf8');
       const userId = req.body.userId || "67f3bd679937c252dacacee4"; // Default user ID if not provided
-      const defaultTitle = `Exam - ${difficulty} - ${new Date().toLocaleDateString()}`;
+      const defaultTitle = `Exam - ${difficulty} - ${new Date().toLocaleString()}`;
       const subject = req.body.subject;
       
       // Create content by making a POST request to the content API
