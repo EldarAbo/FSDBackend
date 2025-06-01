@@ -1,4 +1,5 @@
 import subjectModel from "../models/subjectModel.js";
+import contentModel from "../models/contentModel.js";
 
 class SubjectController {
   constructor() {
@@ -72,7 +73,7 @@ class SubjectController {
           let summaries = 0;
 
           try {
-            const contentCounts = await ContentModel.aggregate([
+            const contentCounts = await contentModel.aggregate([
               {
                 $match: {
                   userId,
@@ -95,7 +96,6 @@ class SubjectController {
           } catch (err) {
             // במקרה של שגיאה באגרגציה, ממשיכים עם 0 ו-0
           }
-
           return {
             _id: subject._id,
             title: subject.title,
