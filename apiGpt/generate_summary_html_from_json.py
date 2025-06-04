@@ -44,26 +44,18 @@ def format_numbered_string(value):
     return html
 
 def format_value(value):
-    if isinstance(value, dict):
-        return format_dict_to_html(value)
-    elif isinstance(value, list):
-        return format_list_to_html(value)
-    elif isinstance(value, str):
-        if is_probably_code(value):
-            return f"<pre><code class=\"code-block\">{value}</code></pre>"
-        if re.search(r'\d+\.\s', value):
-            return format_numbered_string(value)
-        stripped = value.strip()
-        if stripped.startswith('[') and stripped.endswith(']'):
-            try:
-                parsed = ast.literal_eval(stripped)
-                if isinstance(parsed, list):
-                    return format_list_to_html(parsed)
-            except Exception:
-                pass
-        return f"<p dir='{detect_direction(value)}'>{value}</p>"
-    else:
-        return f"<p dir='{detect_direction(str(value))}'>{str(value)}</p>"
+    if isinstance(value, (dict, list)):
+        value = json.dumps(value, ensure_ascii=False, indent=2)
+
+    elif not isinstance(value, str):
+        value = str(value)
+
+    value = value.strip()
+    if is_probably_code(value):
+        return f"<pre><code class=\"code-block\">{value}</code></pre>"
+    
+    return f"<p dir='{detect_direction(value)}'>{value}</p>"
+
 
 def sanitize_anchor(text):
     anchor = re.sub(r'[^\w\sא-ת]', '', text)
