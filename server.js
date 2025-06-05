@@ -61,10 +61,20 @@ if (process.env.NODE_ENV === "production") {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
 
-    // הוסף לפני כל הראוטים האחרים
-    app.get('*', (req, res) => {
+    app.get('*', (req, res, next) => {
+    const openPaths = ['/login', '/signup', '/auth', '/api-docs']; // תוסיף פה כל מה שצריך להישאר פתוח
+    if (openPaths.some(path => req.path.startsWith(path))) {
+      return next(); // נתיב פתוח, ממשיכים בלי בדיקת התחברות
+    }
+
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      // מחובר - מגישים את ה־React app
       res.sendFile(path.join(__dirname, 'front', 'index.html'));
-});
+    } else {
+      // לא מחובר - מפנים ל-login (כמו בפרונט יש לך route לזה)
+      res.redirect('/');
+    }
+  });
 }
 const options = {
     definition: {
