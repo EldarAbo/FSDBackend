@@ -100,10 +100,10 @@ def json_to_html(json_data, output_file="output/summary.html"):
             font-size: 16px;
             line-height: 1.6;
             background: white;
-            padding: 15px;
+            padding: 10px 15px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         nav {
             background-color: #ffffff;
@@ -146,10 +146,19 @@ def json_to_html(json_data, output_file="output/summary.html"):
         li {
             background: #F0EAF6;
             color: #ab7cc3;
-            margin: 8px 0;
+            margin: 4px 0;
             padding: 10px;
             border-radius: 4px;
         }
+
+        li *:last-child {
+            margin-bottom: 0;
+        }
+        
+        li *:first-child {
+            margin-top: 0;
+        }
+
         a.top-link {
             display: inline-block;
             margin-top: 10px;
