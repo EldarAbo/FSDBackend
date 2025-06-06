@@ -232,8 +232,13 @@ router.post('/upload-and-generate-exam', upload.single('file'), async (req, res)
     }
     
     // Extract the new parameters from request body
-    const numAmerican = parseInt(req.body.numAmerican) || 8;  // Default to 8 if not provided
-    const numOpen = parseInt(req.body.numOpen) || 3;          // Default to 3 if not provided
+    const numAmerican = req.body.numAmerican != null && req.body.numAmerican !== '' 
+      ? Math.max(parseInt(req.body.numAmerican) || 0, 0) 
+      : 8;
+
+    const numOpen = req.body.numOpen != null && req.body.numOpen !== '' 
+      ? Math.max(parseInt(req.body.numOpen) || 0, 0) 
+      : 3;
     let additionalPrompt = req.body.prompt || '';  // Default to empty string if not provided
     const difficulty = req.body.difficulty || 'Moderate';     // Default to Moderate if not provided
 
