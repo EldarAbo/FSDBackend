@@ -50,14 +50,20 @@ class SubjectController {
     try {
       const deletedSubject = await this.model.findByIdAndDelete(id);
       if (!deletedSubject) {
-        res.status(404).send("Subject not found");
-      } else {
-        res.status(200).send(deletedSubject);
+        return res.status(404).send("Subject not found");
       }
+
+      await contentModel.updateMany(
+        { subject: id },
+        { $set: { subject: "" } }
+      );
+
+      res.status(200).send(deletedSubject);
     } catch (error) {
       res.status(400).send(error);
     }
   }
+
 
   async getSubjectsByUserId(userId) {
     try {
