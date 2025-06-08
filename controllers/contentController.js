@@ -172,33 +172,36 @@ class ContentController {
     }
   }
 
-  async getCheckedContent(req, res) {
-    try {
-      // Only return non-deleted shared content
-      const checkedContent = await this.model.find({ 
-        shared: true, 
-        deleted: { $ne: true } 
-      });
+async getCheckedContent(req, res) {
+  try {
+    const checkedContent = await this.model.find({ 
+      shared: true, 
+      deleted: { $ne: true } 
+    });
 
-      const contentWithUser = await Promise.all(
-        checkedContent.map(async (content) => {
-          const user = await userModel.findById(content.userId).select("username fullName imgUrl");
-          const fullSubject = await subjectModel.findOne({ _id: content.subject }); // <- fixed `item` to `content`
+    const contentWithUser = await Promise.all(
+      checkedContent.map(async (content) => {
+        const user = await userModel
+          .findById(content.userId)
+          .select("username fullName imgUrl -_id"); // הסתרת _id
+          
+        const fullSubject = await subjectModel.findOne({ _id: content.subject });
 
-          return {
-            ...content.toObject(),
-            user,
-            ...(fullSubject && { subjectTitle: fullSubject.title }), // only add if found
-          };
-        })
-      );
+        const { userId, ...contentWithoutUserId } = content.toObject();
+        return {
+          ...contentWithoutUserId,
+          user,
+          ...(fullSubject && { subjectTitle: fullSubject.title }),
+        };
+      })
+    );
 
-      res.status(200).json(contentWithUser);
-    } catch (error) {
-      console.error("Error fetching checked content:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
+    res.status(200).json(contentWithUser);
+  } catch (error) {
+    console.error("Error fetching checked content:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
+}
 
   // New method to get deleted content (for admin or recovery purposes)
   async getDeletedContent(req, res) {
